@@ -1,6 +1,8 @@
 # light_alarm
 
-スマートフォンのライトを使用した目覚まし時計です。
+作成中  
+Youtubeに上がっている動画を参考に書いています。
+https://youtu.be/WMp5FnQ1X_g
 
 ## Getting Started
 
