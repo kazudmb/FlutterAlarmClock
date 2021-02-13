@@ -1,3 +1,4 @@
+import 'package:light_alarm/alarm_info.dart';
 import 'package:light_alarm/enums.dart';
 import 'package:light_alarm/menu_info.dart';
 
@@ -10,4 +11,8 @@ List<MenuInfo> menuItems = [
       title: 'Timer', imageSource: 'assets/timer_icon.png'),
   MenuInfo(MenuType.stopwatch,
       title: 'Stopwatch', imageSource: 'assets/stopwatch_icon.png'),
+];
+
+List<AlarmInfo> alarms = [
+  AlarmInfo((DateTime.now().add(Duration(hours: 1))), description: 'Office')
 ];

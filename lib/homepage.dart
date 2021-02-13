@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:light_alarm/clock_view.dart';
+import 'package:light_alarm/alarm_page.dart';
+import 'package:light_alarm/clock_page.dart';
 import 'package:light_alarm/constants/theme_dart.dart';
 import 'package:light_alarm/data.dart';
+import 'package:light_alarm/enums.dart';
 import 'package:light_alarm/menu_info.dart';
 import 'package:provider/provider.dart';
 
@@ -37,91 +39,25 @@ class _HomePageState extends State<HomePage> {
           Expanded(
             child: Consumer<MenuInfo>(
               builder: (BuildContext context, MenuInfo value, Widget child) {
-                return Container(
-                  padding: EdgeInsets.symmetric(horizontal: 32, vertical: 64),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Flexible(
-                        flex: 1,
-                        fit: FlexFit.tight,
-                        child: Text(
-                          'Clock',
-                          style: TextStyle(
-                              fontFamily: 'avenir',
-                              fontWeight: FontWeight.w700,
-                              color: Colors.white,
-                              fontSize: 24),
-                        ),
-                      ),
-                      SizedBox(height: 32),
-                      Flexible(
-                        flex: 2,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              formattedTime,
-                              style: TextStyle(
-                                  fontFamily: 'avenir',
-                                  color: Colors.white,
-                                  fontSize: 64),
-                            ),
-                            Text(
-                              formattedDate,
-                              style: TextStyle(
-                                  fontFamily: 'avenir',
-                                  fontWeight: FontWeight.w300,
-                                  color: Colors.white,
-                                  fontSize: 20),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Flexible(
-                        flex: 4,
-                        fit: FlexFit.tight,
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: ClockView(
-                            size: MediaQuery.of(context).size.height / 4,
+                if (value.menuType == MenuType.clock)
+                  return ClockPage();
+                else if (value.menuType == MenuType.alarm)
+                  return AlarmPage();
+                else
+                  return Container(
+                    child: RichText(
+                      text: TextSpan(
+                        style: TextStyle(fontSize: 20),
+                        children: <TextSpan>[
+                          TextSpan(text: 'Upcoming Tutorial\n'),
+                          TextSpan(
+                            text: value.title,
+                            style: TextStyle(fontSize: 48),
                           ),
-                        ),
+                        ],
                       ),
-                      Flexible(
-                        flex: 2,
-                        fit: FlexFit.tight,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              'Timezone',
-                              style: TextStyle(
-                                  fontFamily: 'avenir',
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.white,
-                                  fontSize: 24),
-                            ),
-                            SizedBox(height: 16),
-                            Row(
-                              children: <Widget>[
-                                Icon(Icons.language, color: Colors.white),
-                                SizedBox(width: 16),
-                                Text(
-                                  'UTC' + offsetSign + timezoneString,
-                                  style: TextStyle(
-                                      fontFamily: 'avenir',
-                                      color: Colors.white,
-                                      fontSize: 24),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                );
+                    ),
+                  );
               },
             ),
           ),
