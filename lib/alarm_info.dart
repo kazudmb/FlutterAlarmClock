@@ -1,7 +1,10 @@
+import 'package:flutter/material.dart';
+
 class AlarmInfo {
-  DateTime alarmDatetime;
+  DateTime alarmDateTime;
   String description;
   bool isActive;
+  List<Color> gradientColors;
 
-  AlarmInfo(this.alarmDatetime, {this.description});
+  AlarmInfo(this.alarmDateTime, {this.description, this.gradientColors});
 }

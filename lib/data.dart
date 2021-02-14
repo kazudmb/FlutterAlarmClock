@@ -1,4 +1,5 @@
 import 'package:light_alarm/alarm_info.dart';
+import 'package:light_alarm/constants/theme_dart.dart';
 import 'package:light_alarm/enums.dart';
 import 'package:light_alarm/menu_info.dart';
 
@@ -14,5 +15,8 @@ List<MenuInfo> menuItems = [
 ];
 
 List<AlarmInfo> alarms = [
-  AlarmInfo((DateTime.now().add(Duration(hours: 1))), description: 'Office')
+  AlarmInfo(DateTime.now().add(Duration(hours: 1)),
+      description: 'Office', gradientColors: GradientColors.sky),
+  AlarmInfo(DateTime.now().add(Duration(hours: 2)),
+      description: 'Sport', gradientColors: GradientColors.sunset),
 ];
