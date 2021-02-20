@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:light_alarm/enums.dart';
-import 'package:light_alarm/homepage.dart';
-import 'package:light_alarm/menu_info.dart';
+import 'package:light_alarm/alarm_page.dart';
 import 'package:provider/provider.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -40,9 +38,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: ChangeNotifierProvider<MenuInfo>(
-        create: (context) => MenuInfo(MenuType.clock),
-        child: HomePage(),
+      home: ChangeNotifierProvider(
+        create: (BuildContext context) {},
+        child: AlarmPage(),
       ),
     );
   }
