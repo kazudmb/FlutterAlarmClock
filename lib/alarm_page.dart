@@ -18,6 +18,7 @@ class _AlarmPageState extends State<AlarmPage> {
   AlarmHelper _alarmHelper = AlarmHelper();
   Future<List<AlarmInfo>> _alarms;
   List<AlarmInfo> _currentAlarms;
+  TextEditingController _textEditingController;
 
   @override
   void initState() {
@@ -26,6 +27,7 @@ class _AlarmPageState extends State<AlarmPage> {
       print('------database intialized');
       loadAlarms();
     });
+    _textEditingController = TextEditingController(text: 'アラーム');
     super.initState();
   }
 
@@ -213,20 +215,26 @@ class _AlarmPageState extends State<AlarmPage> {
                                                         TextStyle(fontSize: 32),
                                                   ),
                                                 ),
+                                                // TODO: 曜日の変更をできるようにすること
                                                 ListTile(
                                                   title: Text('Repeat'),
                                                   trailing: Icon(
                                                       Icons.arrow_forward_ios),
                                                 ),
-                                                ListTile(
-                                                  title: Text('Sound'),
-                                                  trailing: Icon(
-                                                      Icons.arrow_forward_ios),
-                                                ),
+                                                // TODO: タイトルの変更をできるようにすること
                                                 ListTile(
                                                   title: Text('Title'),
                                                   trailing: Icon(
                                                       Icons.arrow_forward_ios),
+                                                ),
+                                                TextFormField(
+                                                  controller:
+                                                      _textEditingController,
+                                                  decoration: const InputDecoration(
+                                                      border:
+                                                          const UnderlineInputBorder(),
+                                                      hintText: 'アラーム',
+                                                      labelText: 'ラベル'),
                                                 ),
                                                 FloatingActionButton.extended(
                                                   onPressed: onSaveAlarm,
