@@ -116,9 +116,11 @@ class DigitalClockWidget extends StatefulWidget {
 
 class DigitalClockWidgetState extends State<DigitalClockWidget> {
   var formattedTime = DateFormat('HH:mm').format(DateTime.now());
+  Timer timer;
+
   @override
   void initState() {
-    Timer.periodic(Duration(seconds: 1), (timer) {
+    this.timer = Timer.periodic(Duration(seconds: 1), (timer) {
       var perviousMinute = DateTime.now().add(Duration(seconds: -1)).minute;
       var currentMinute = DateTime.now().minute;
       if (perviousMinute != currentMinute)
@@ -127,6 +129,12 @@ class DigitalClockWidgetState extends State<DigitalClockWidget> {
         });
     });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    this.timer.cancel();
+    super.dispose();
   }
 
   @override

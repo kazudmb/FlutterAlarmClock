@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:light_alarm/alarm_page.dart';
 import 'package:light_alarm/clock_page.dart';
 import 'package:light_alarm/constants/theme_dart.dart';
@@ -10,30 +9,24 @@ import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _HomePageState();
+  _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    var now = DateTime.now();
-    var formattedTime = DateFormat('HH:mm').format(now);
-    var formattedDate = DateFormat('EEE, d MMM').format(now);
-    var timezoneString = now.timeZoneOffset.toString().split('.').first;
-    var offsetSign = '';
-    if (!timezoneString.startsWith('-')) offsetSign = '+';
-    print(timezoneString);
     return Scaffold(
-      backgroundColor: Color(0xFF2D2F41),
+      backgroundColor: CustomColors.pageBackgroundColor,
       body: Row(
         children: <Widget>[
           Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: menuItems
-                  .map((currentMenuInfo) => buildMenuButton(currentMenuInfo))
-                  .toList()),
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: menuItems
+                .map((currentMenuInfo) => buildMenuButton(currentMenuInfo))
+                .toList(),
+          ),
           VerticalDivider(
-            color: Colors.white54,
+            color: CustomColors.dividerColor,
             width: 1,
           ),
           Expanded(
@@ -82,12 +75,17 @@ class _HomePageState extends State<HomePage> {
           },
           child: Column(
             children: <Widget>[
-              Image.asset(currentMenuInfo.imageSource, scale: 1.5),
+              Image.asset(
+                currentMenuInfo.imageSource,
+                scale: 1.5,
+              ),
               SizedBox(height: 16),
               Text(
                 currentMenuInfo.title ?? '',
                 style: TextStyle(
-                    fontFamily: 'avenir', color: Colors.white, fontSize: 14),
+                    fontFamily: 'avenir',
+                    color: CustomColors.primaryTextColor,
+                    fontSize: 14),
               ),
             ],
           ),
