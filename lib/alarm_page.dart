@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:light_alarm/alarm_helper.dart';
 import 'package:light_alarm/alarm_info.dart';
 import 'package:light_alarm/alarm_label_dialog.dart';
+import 'package:light_alarm/alarm_repeat_dialog.dart';
 import 'package:light_alarm/constants/theme_dart.dart';
 import 'package:light_alarm/main.dart';
 
@@ -19,7 +20,8 @@ class _AlarmPageState extends State<AlarmPage> {
   AlarmHelper _alarmHelper = AlarmHelper();
   Future<List<AlarmInfo>> _alarms;
   List<AlarmInfo> _currentAlarms;
-  TextEditingController _textEditingController;
+  String label = 'アラーム';
+  String repeatDayOfTheWeek = 'なし';
 
   @override
   void initState() {
@@ -28,7 +30,6 @@ class _AlarmPageState extends State<AlarmPage> {
       print('------database intialized');
       loadAlarms();
     });
-    _textEditingController = TextEditingController(text: 'アラーム');
     super.initState();
   }
 
@@ -217,24 +218,36 @@ class _AlarmPageState extends State<AlarmPage> {
                                                   ),
                                                 ),
                                                 // TODO: 曜日の変更をできるようにすること
-                                                ListTile(
-                                                  title: Text('Repeat'),
-                                                  trailing: Icon(
-                                                      Icons.arrow_forward_ios),
+                                                GestureDetector(
+                                                  onTap: () async {
+                                                    print("onTap called.");
+                                                    List<bool> checkbox =
+                                                        await showAlarmRepeatDialog(
+                                                            context: context);
+                                                    repeatDayOfTheWeek =
+                                                        getRepeatDayOfTheWeek(
+                                                            checkbox);
+                                                    print(checkbox);
+                                                    print(repeatDayOfTheWeek);
+                                                  },
+                                                  child: ListTile(
+                                                    title: Text('繰り返し'),
+                                                    trailing: Text(
+                                                        repeatDayOfTheWeek),
+                                                  ),
                                                 ),
                                                 // TODO: タイトルの変更をできるようにすること
                                                 GestureDetector(
                                                   onTap: () async {
                                                     print("onTap called.");
-                                                    String label =
+                                                    label =
                                                         await showAlarmLabelDialog(
                                                             context: context);
                                                     print(label);
                                                   },
                                                   child: ListTile(
-                                                    title: Text('Title'),
-                                                    trailing: Icon(Icons
-                                                        .arrow_forward_ios),
+                                                    title: Text('ラベル'),
+                                                    trailing: Text(label),
                                                   ),
                                                 ),
                                                 FloatingActionButton.extended(
@@ -354,5 +367,34 @@ class _AlarmPageState extends State<AlarmPage> {
         return builder == null ? dialog : builder(context, dialog);
       },
     );
+  }
+
+  Future<List<bool>> showAlarmRepeatDialog({
+    @required BuildContext context,
+    TransitionBuilder builder,
+    bool useRootNavigator = true,
+  }) {
+    final Widget dialog = AlarmRepeatDialog();
+    return showDialog(
+      context: context,
+      useRootNavigator: useRootNavigator,
+      builder: (BuildContext context) {
+        return builder == null ? dialog : builder(context, dialog);
+      },
+    );
+  }
+
+  String getRepeatDayOfTheWeek(List<bool> checkboxState) {
+    String repeatDayOfTheWeek = '';
+    List<String> dayOfTheWeek = ['月 ', '火 ', '水 ', '木 ', '金 ', '土 ', '日 '];
+    for (int i = 0; i < checkboxState.length; i++) {
+      if (checkboxState[i]) {
+        repeatDayOfTheWeek = repeatDayOfTheWeek + dayOfTheWeek[i];
+      }
+    }
+    if (repeatDayOfTheWeek.isEmpty) {
+      repeatDayOfTheWeek = 'なし';
+    }
+    return repeatDayOfTheWeek;
   }
 }
