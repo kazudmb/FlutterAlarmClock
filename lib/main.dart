@@ -9,8 +9,7 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  var initializationSettingsAndroid =
-      AndroidInitializationSettings('codex_logo');
+  var initializationSettingsAndroid = AndroidInitializationSettings('doroid');
   var initializationSettingsIOS = IOSInitializationSettings(
       requestAlertPermission: true,
       requestBadgePermission: true,
