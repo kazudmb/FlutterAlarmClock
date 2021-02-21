@@ -4,6 +4,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
 import 'package:light_alarm/alarm_helper.dart';
 import 'package:light_alarm/alarm_info.dart';
+import 'package:light_alarm/alarm_label_dialog.dart';
 import 'package:light_alarm/constants/theme_dart.dart';
 import 'package:light_alarm/main.dart';
 
@@ -222,19 +223,19 @@ class _AlarmPageState extends State<AlarmPage> {
                                                       Icons.arrow_forward_ios),
                                                 ),
                                                 // TODO: タイトルの変更をできるようにすること
-                                                ListTile(
-                                                  title: Text('Title'),
-                                                  trailing: Icon(
-                                                      Icons.arrow_forward_ios),
-                                                ),
-                                                TextFormField(
-                                                  controller:
-                                                      _textEditingController,
-                                                  decoration: const InputDecoration(
-                                                      border:
-                                                          const UnderlineInputBorder(),
-                                                      hintText: 'アラーム',
-                                                      labelText: 'ラベル'),
+                                                GestureDetector(
+                                                  onTap: () async {
+                                                    print("onTap called.");
+                                                    String label =
+                                                        await showAlarmLabelDialog(
+                                                            context: context);
+                                                    print(label);
+                                                  },
+                                                  child: ListTile(
+                                                    title: Text('Title'),
+                                                    trailing: Icon(Icons
+                                                        .arrow_forward_ios),
+                                                  ),
                                                 ),
                                                 FloatingActionButton.extended(
                                                   onPressed: onSaveAlarm,
@@ -338,5 +339,20 @@ class _AlarmPageState extends State<AlarmPage> {
     _alarmHelper.delete(id);
     //unsubscribe for notification
     loadAlarms();
+  }
+
+  Future<String> showAlarmLabelDialog({
+    @required BuildContext context,
+    TransitionBuilder builder,
+    bool useRootNavigator = true,
+  }) {
+    final Widget dialog = AlarmLabelDialog();
+    return showDialog(
+      context: context,
+      useRootNavigator: useRootNavigator,
+      builder: (BuildContext context) {
+        return builder == null ? dialog : builder(context, dialog);
+      },
+    );
   }
 }
