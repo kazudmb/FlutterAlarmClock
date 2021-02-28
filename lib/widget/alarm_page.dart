@@ -4,10 +4,10 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
 import 'package:light_alarm/alarm_helper.dart';
 import 'package:light_alarm/alarm_info.dart';
-import 'package:light_alarm/alarm_label_dialog.dart';
-import 'package:light_alarm/alarm_repeat_dialog.dart';
 import 'package:light_alarm/constants/theme_dart.dart';
 import 'package:light_alarm/main.dart';
+import 'package:light_alarm/widget/dialog/alarm_label_dialog.dart';
+import 'package:light_alarm/widget/dialog/alarm_repeat_dialog.dart';
 
 class AlarmPage extends StatefulWidget {
   @override
