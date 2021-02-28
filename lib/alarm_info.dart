@@ -4,13 +4,17 @@ class AlarmInfo {
   DateTime alarmDateTime;
   bool isPending;
   int gradientColorIndex;
+  // TODO: 本当はList<bool>で持ちたい
+  String repeat;
 
-  AlarmInfo(
-      {this.id,
-      this.title,
-      this.alarmDateTime,
-      this.isPending,
-      this.gradientColorIndex});
+  AlarmInfo({
+    this.id,
+    this.title,
+    this.alarmDateTime,
+    this.isPending,
+    this.gradientColorIndex,
+    this.repeat,
+  });
 
   factory AlarmInfo.fromMap(Map<String, dynamic> json) => AlarmInfo(
         id: json["id"],
@@ -18,6 +22,7 @@ class AlarmInfo {
         alarmDateTime: DateTime.parse(json["alarmDateTime"]),
         isPending: json["isPending"],
         gradientColorIndex: json["gradientColorIndex"],
+        repeat: json["repeat"],
       );
   Map<String, dynamic> toMap() => {
         "id": id,
@@ -25,5 +30,6 @@ class AlarmInfo {
         "alarmDateTime": alarmDateTime.toIso8601String(),
         "isPending": isPending,
         "gradientColorIndex": gradientColorIndex,
+        "repeat": repeat,
       };
 }

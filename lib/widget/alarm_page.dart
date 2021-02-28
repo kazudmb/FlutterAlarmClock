@@ -117,9 +117,8 @@ class _AlarmPageState extends State<AlarmPage> {
                                   ),
                                 ],
                               ),
-                              // TODO: 繰り返し数を取得し、応答
                               Text(
-                                'Mon-Fri',
+                                alarm.repeat,
                                 style: TextStyle(
                                     color: Colors.white, fontFamily: 'avenir'),
                               ),
@@ -345,6 +344,7 @@ class _AlarmPageState extends State<AlarmPage> {
       alarmDateTime: scheduleAlarmDateTime,
       gradientColorIndex: _currentAlarms.length,
       title: label,
+      repeat: repeatDayOfTheWeek,
     );
     _alarmHelper.insertAlarm(alarmInfo);
     scheduleAlarm(scheduleAlarmDateTime, alarmInfo);

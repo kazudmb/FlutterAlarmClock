@@ -8,6 +8,7 @@ final String columnTitle = 'title';
 final String columnDateTime = 'alarmDateTime';
 final String columnPending = 'isPending';
 final String columnColorIndex = 'gradientColorIndex';
+final String columnRepeat = 'repeat';
 
 class AlarmHelper {
   static Database _database;
@@ -42,7 +43,8 @@ class AlarmHelper {
           $columnTitle text not null,
           $columnDateTime text not null,
           $columnPending integer,
-          $columnColorIndex integer)
+          $columnColorIndex integer,
+          $columnRepeat text not null)
         ''');
       },
     );
