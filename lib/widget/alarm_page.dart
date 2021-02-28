@@ -6,6 +6,7 @@ import 'package:light_alarm/alarm_helper.dart';
 import 'package:light_alarm/alarm_info.dart';
 import 'package:light_alarm/constants/theme_dart.dart';
 import 'package:light_alarm/main.dart';
+import 'package:light_alarm/widget/dialog/alarm_delete_confirm_dialog.dart';
 import 'package:light_alarm/widget/dialog/alarm_label_dialog.dart';
 import 'package:light_alarm/widget/dialog/alarm_repeat_dialog.dart';
 
@@ -137,7 +138,10 @@ class _AlarmPageState extends State<AlarmPage> {
                                   IconButton(
                                       icon: Icon(Icons.delete),
                                       color: Colors.white,
-                                      onPressed: () {
+                                      onPressed: () async {
+                                        await showAlarmDeleteConfirmDialog(
+                                            context: context);
+                                        // TODO: dialogのYes,Noを判定して処理を行う
                                         deleteAlarm(alarm.id);
                                       }),
                                 ],
@@ -379,6 +383,21 @@ class _AlarmPageState extends State<AlarmPage> {
     bool useRootNavigator = true,
   }) {
     final Widget dialog = AlarmRepeatDialog();
+    return showDialog(
+      context: context,
+      useRootNavigator: useRootNavigator,
+      builder: (BuildContext context) {
+        return builder == null ? dialog : builder(context, dialog);
+      },
+    );
+  }
+
+  Future<String> showAlarmDeleteConfirmDialog({
+    @required BuildContext context,
+    TransitionBuilder builder,
+    bool useRootNavigator = true,
+  }) {
+    final Widget dialog = AlarmDeleteConfirmDialog();
     return showDialog(
       context: context,
       useRootNavigator: useRootNavigator,
