@@ -23,6 +23,7 @@ class _AlarmPageState extends State<AlarmPage> {
   List<AlarmInfo> _currentAlarms;
   String label = 'アラーム';
   String repeatDayOfTheWeek = 'なし';
+  bool _switchValue = false;
 
   @override
   void initState() {
@@ -112,8 +113,12 @@ class _AlarmPageState extends State<AlarmPage> {
                                     ],
                                   ),
                                   Switch(
-                                    onChanged: (bool value) {},
-                                    value: true,
+                                    onChanged: (bool value) {
+                                      setState(() {
+                                        _switchValue = value;
+                                      });
+                                    },
+                                    value: _switchValue,
                                     activeColor: Colors.white,
                                   ),
                                 ],
@@ -349,12 +354,16 @@ class _AlarmPageState extends State<AlarmPage> {
       gradientColorIndex: _currentAlarms.length,
       title: label,
       repeat: repeatDayOfTheWeek,
+      isPending: false,
     );
     _alarmHelper.insertAlarm(alarmInfo);
     scheduleAlarm(scheduleAlarmDateTime, alarmInfo);
     Navigator.pop(context);
     loadAlarms();
   }
+
+  // TODO: スイッチの切り替えのタイミングで、alarmIDをもとにDBのisPendingを更新する
+  void updateIsPending() {}
 
   void deleteAlarm(int id) {
     _alarmHelper.delete(id);
