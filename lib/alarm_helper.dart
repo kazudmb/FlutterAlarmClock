@@ -42,7 +42,7 @@ class AlarmHelper {
           $columnId integer primary key autoincrement, 
           $columnTitle text not null,
           $columnDateTime text not null,
-          $columnPending integer,
+          $columnPending integer not null,
           $columnColorIndex integer,
           $columnRepeat text not null)
         ''');
@@ -68,6 +68,15 @@ class AlarmHelper {
     });
 
     return _alarms;
+  }
+
+  Future<int> updatePending(int id, int isPending) async {
+    var db = await this.database;
+    var values = <String, dynamic>{
+      columnPending: isPending,
+    };
+    return await db
+        .update(tableAlarm, values, where: '$columnId = ?', whereArgs: [id]);
   }
 
   Future<int> delete(int id) async {

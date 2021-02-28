@@ -116,9 +116,13 @@ class _AlarmPageState extends State<AlarmPage> {
                                     onChanged: (bool value) {
                                       setState(() {
                                         _switchValue = value;
+                                        updateIsPending(
+                                            alarm.id, _switchValue ? 0 : 1);
                                       });
                                     },
                                     value: _switchValue,
+                                    // TODO: スイッチの初期値を設定する方法を検討
+                                    // value: alarm.isPending == 0 ? false : true,
                                     activeColor: Colors.white,
                                   ),
                                 ],
@@ -354,7 +358,7 @@ class _AlarmPageState extends State<AlarmPage> {
       gradientColorIndex: _currentAlarms.length,
       title: label,
       repeat: repeatDayOfTheWeek,
-      isPending: false,
+      isPending: 0,
     );
     _alarmHelper.insertAlarm(alarmInfo);
     scheduleAlarm(scheduleAlarmDateTime, alarmInfo);
@@ -362,8 +366,10 @@ class _AlarmPageState extends State<AlarmPage> {
     loadAlarms();
   }
 
-  // TODO: スイッチの切り替えのタイミングで、alarmIDをもとにDBのisPendingを更新する
-  void updateIsPending() {}
+  void updateIsPending(int id, int isPending) {
+    _alarmHelper.updatePending(id, isPending);
+    loadAlarms();
+  }
 
   void deleteAlarm(int id) {
     _alarmHelper.delete(id);
