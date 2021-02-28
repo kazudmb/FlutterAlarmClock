@@ -117,6 +117,7 @@ class _AlarmPageState extends State<AlarmPage> {
                                   ),
                                 ],
                               ),
+                              // TODO: 繰り返し数を取得し、応答
                               Text(
                                 'Mon-Fri',
                                 style: TextStyle(
@@ -251,7 +252,10 @@ class _AlarmPageState extends State<AlarmPage> {
                                                   ),
                                                 ),
                                                 FloatingActionButton.extended(
-                                                  onPressed: onSaveAlarm,
+                                                  onPressed: () {
+                                                    onSaveAlarm(label,
+                                                        repeatDayOfTheWeek);
+                                                  },
                                                   icon: Icon(Icons.alarm),
                                                   label: Text('Save'),
                                                 ),
@@ -330,7 +334,7 @@ class _AlarmPageState extends State<AlarmPage> {
         scheduledNotificationDateTime, platformChannelSpecifics);
   }
 
-  void onSaveAlarm() {
+  void onSaveAlarm(String label, String repeatDayOfTheWeek) {
     DateTime scheduleAlarmDateTime;
     if (_alarmTime.isAfter(DateTime.now()))
       scheduleAlarmDateTime = _alarmTime;
@@ -340,7 +344,7 @@ class _AlarmPageState extends State<AlarmPage> {
     var alarmInfo = AlarmInfo(
       alarmDateTime: scheduleAlarmDateTime,
       gradientColorIndex: _currentAlarms.length,
-      title: 'alarm',
+      title: label,
     );
     _alarmHelper.insertAlarm(alarmInfo);
     scheduleAlarm(scheduleAlarmDateTime, alarmInfo);
