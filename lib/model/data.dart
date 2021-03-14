@@ -1,4 +1,4 @@
-import 'package:light_alarm/alarm_info.dart';
+import 'package:light_alarm/model/alarm_info.dart';
 
 List<AlarmInfo> alarms = [
   AlarmInfo(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:light_alarm/widget/alarm_page.dart';
+import 'package:light_alarm/view/alarm_page.dart';
 import 'package:provider/provider.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -28,7 +28,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+  // This view.widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

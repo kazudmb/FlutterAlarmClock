@@ -2,13 +2,13 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
-import 'package:light_alarm/alarm_helper.dart';
-import 'package:light_alarm/alarm_info.dart';
 import 'package:light_alarm/constants/theme_dart.dart';
 import 'package:light_alarm/main.dart';
-import 'package:light_alarm/widget/dialog/alarm_delete_confirm_dialog.dart';
-import 'package:light_alarm/widget/dialog/alarm_label_dialog.dart';
-import 'package:light_alarm/widget/dialog/alarm_repeat_dialog.dart';
+import 'package:light_alarm/model/alarm_info.dart';
+import 'package:light_alarm/view/dialog/alarm_delete_confirm_dialog.dart';
+import 'package:light_alarm/view/dialog/alarm_label_dialog.dart';
+import 'package:light_alarm/view/dialog/alarm_repeat_dialog.dart';
+import 'package:light_alarm/viewmodel/alarm_helper.dart';
 
 class AlarmPage extends StatefulWidget {
   @override
