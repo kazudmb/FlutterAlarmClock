@@ -1,6 +1,7 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:light_alarm/constants/theme_dart.dart';
 import 'package:light_alarm/main.dart';
@@ -9,6 +10,8 @@ import 'package:light_alarm/view/dialog/alarm_delete_confirm_dialog.dart';
 import 'package:light_alarm/view/dialog/alarm_label_dialog.dart';
 import 'package:light_alarm/view/dialog/alarm_repeat_dialog.dart';
 import 'package:light_alarm/viewmodel/alarm_helper.dart';
+
+final counterProvider = StateProvider((ref) => 0);
 
 class AlarmPage extends StatefulWidget {
   @override

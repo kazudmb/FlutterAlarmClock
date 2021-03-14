@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:light_alarm/view/alarm_page.dart';
-import 'package:provider/provider.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -24,10 +25,10 @@ void main() async {
       debugPrint('notification payload: ' + payload);
     }
   });
-  runApp(MyApp());
+  runApp(ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends HookWidget {
   // This view.widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -37,10 +38,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: ChangeNotifierProvider(
-        create: (BuildContext context) {},
-        child: AlarmPage(),
-      ),
+      home: AlarmPage(),
     );
   }
 }
