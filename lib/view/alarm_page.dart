@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:light_alarm/constants/theme_dart.dart';
 import 'package:light_alarm/main.dart';
-import 'package:light_alarm/model/alarm_info.dart';
+import 'package:light_alarm/model/Alarm.dart';
 import 'package:light_alarm/view/dialog/alarm_delete_confirm_dialog.dart';
 import 'package:light_alarm/view/dialog/alarm_label_dialog.dart';
 import 'package:light_alarm/view/dialog/alarm_repeat_dialog.dart';
@@ -22,8 +22,8 @@ class _AlarmPageState extends State<AlarmPage> {
   DateTime _alarmTime;
   String _alarmTimeString;
   AlarmHelper _alarmHelper = AlarmHelper();
-  Future<List<AlarmInfo>> _alarms;
-  List<AlarmInfo> _currentAlarms;
+  Future<List<Alarm>> _alarms;
+  List<Alarm> _currentAlarms;
   String label = 'アラーム';
   String repeatDayOfTheWeek = 'なし';
   bool _switchValue = false;
@@ -61,7 +61,7 @@ class _AlarmPageState extends State<AlarmPage> {
                   fontSize: 24),
             ),
             Expanded(
-              child: FutureBuilder<List<AlarmInfo>>(
+              child: FutureBuilder<List<Alarm>>(
                 future: _alarms,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
@@ -101,12 +101,6 @@ class _AlarmPageState extends State<AlarmPage> {
                                 children: <Widget>[
                                   Row(
                                     children: <Widget>[
-                                      Icon(
-                                        Icons.label,
-                                        color: Colors.white,
-                                        size: 24,
-                                      ),
-                                      SizedBox(width: 8),
                                       Text(
                                         alarm.title,
                                         style: TextStyle(
@@ -326,7 +320,7 @@ class _AlarmPageState extends State<AlarmPage> {
   }
 
   void scheduleAlarm(
-      DateTime scheduledNotificationDateTime, AlarmInfo alarmInfo) async {
+      DateTime scheduledNotificationDateTime, Alarm alarmInfo) async {
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
       'alarm_notif',
       'alarm_notif',
@@ -356,7 +350,7 @@ class _AlarmPageState extends State<AlarmPage> {
     else
       scheduleAlarmDateTime = _alarmTime.add(Duration(days: 1));
 
-    var alarmInfo = AlarmInfo(
+    var alarmInfo = Alarm(
       alarmDateTime: scheduleAlarmDateTime,
       gradientColorIndex: _currentAlarms.length,
       title: label,

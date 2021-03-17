@@ -1,11 +1,11 @@
-import 'package:light_alarm/model/alarm_info.dart';
+import 'package:light_alarm/model/Alarm.dart';
 
-List<AlarmInfo> alarms = [
-  AlarmInfo(
+List<Alarm> alarms = [
+  Alarm(
       alarmDateTime: DateTime.now().add(Duration(hours: 1)),
       title: 'Office',
       gradientColorIndex: 0),
-  AlarmInfo(
+  Alarm(
       alarmDateTime: DateTime.now().add(Duration(hours: 2)),
       title: 'Sport',
       gradientColorIndex: 1),
