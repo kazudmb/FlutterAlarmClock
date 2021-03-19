@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:light_alarm/model/Alarm.dart';
-import 'package:light_alarm/model/repository/AlarmDataSource.dart';
+import 'package:light_alarm/model/repository/alarm_data_source.dart';
 
 class AlarmDataSourceImpl implements AlarmDataSource {
   AlarmDataSourceImpl({@required Dio dio}) : _dio = dio;

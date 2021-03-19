@@ -1,6 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:light_alarm/model/repository/AlarmDataSource.dart';
-import 'package:light_alarm/model/repository/AlarmDataSourceImpl.dart';
+import 'package:light_alarm/model/repository/alarm_data_source.dart';
+import 'package:light_alarm/model/repository/alarm_data_source_impl.dart';
 
 import 'dio_provider.dart';
 
