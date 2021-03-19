@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:light_alarm/model/repository/alarm.dart';
+import 'package:light_alarm/model/repository/alarm_repository.dart';
+import 'package:light_alarm/model/repository/alarm_repository_provider.dart';
 
-final alarmViewModelNotifierProvider = ChangeNotifierProvider((ref) =>
-    AlarmViewModel(ref, repository: ref.read(alarmDataSourceProvider)));
+final alarmViewModelNotifierProvider = ChangeNotifierProvider(
+    (ref) => AlarmViewModel(repository: ref.read(alarmRepositoryProvider)));
 
 class AlarmViewModel extends ChangeNotifier {
-  AlarmViewModel({@required Alarm repository}) : _repository = repository;
+  AlarmViewModel({@required AlarmRepository repository})
+      : _repository = repository;
 
-  final Alarm _repository;
+  final AlarmRepository _repository;
 
   Alarm _alarm;
 
@@ -18,7 +21,7 @@ class AlarmViewModel extends ChangeNotifier {
     return _repository
         .getAlarm()
         .then((value) {
-          _alarm = value;
+          _alarm = value as Alarm;
         })
         .catchError((dynamic error) {})
         .whenComplete(() => notifyListeners());
