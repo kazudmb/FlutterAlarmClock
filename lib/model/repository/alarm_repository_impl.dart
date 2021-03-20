@@ -1,4 +1,4 @@
-import 'package:light_alarm/model/Alarm.dart';
+import 'package:light_alarm/model/alarm.dart';
 import 'package:light_alarm/model/repository/alarm_repository.dart';
 
 class AlarmRepositoryImpl implements AlarmRepository {

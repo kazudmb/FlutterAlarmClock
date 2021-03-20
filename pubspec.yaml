@@ -18,7 +18,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
   flutter:
@@ -45,17 +45,17 @@ dependencies:
 
   dio: ^3.0.10
 
-  freezed_annotation:
+  freezed_annotation: ^0.14.0
+
+  json_serializable: ^4.0.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  build_runner:
-  freezed:
 
-dependency_overrides:
-  freezed: ^0.12.7
-  freezed_annotation: ^0.12.0
+  build_runner:
+
+  freezed: ^0.14.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

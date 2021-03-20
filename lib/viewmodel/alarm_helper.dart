@@ -1,4 +1,5 @@
-import 'package:light_alarm/model/Alarm.dart';
+import 'package:light_alarm/model/alarm.dart';
+import 'package:light_alarm/model/alarm_info.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/sqlite_api.dart';
 
@@ -51,9 +52,9 @@ class AlarmHelper {
     return database;
   }
 
-  void insertAlarm(Alarm alarmInfo) async {
+  void insertAlarm(Alarm alarm) async {
     var db = await this.database;
-    var result = await db.insert(tableAlarm, alarmInfo.toMap());
+    var result = await db.insert(tableAlarm, alarm.toMap());
     print('result : $result');
   }
 
@@ -63,8 +64,8 @@ class AlarmHelper {
     var db = await this.database;
     var result = await db.query(tableAlarm);
     result.forEach((element) {
-      var alarmInfo = Alarm.fromMap(element);
-      _alarms.add(alarmInfo);
+      var alarm = Alarm.fromMap(element);
+      _alarms.add(alarm);
     });
 
     return _alarms;
@@ -82,5 +83,24 @@ class AlarmHelper {
   Future<int> delete(int id) async {
     var db = await this.database;
     return await db.delete(tableAlarm, where: '$columnId = ?', whereArgs: [id]);
+  }
+
+  void insertAlarmInfo(AlarmInfo alarmInfo) async {
+    var db = await this.database;
+    var result = await db.insert(tableAlarm, alarmInfo.toMap());
+    print('result : $result');
+  }
+
+  Future<List<Alarm>> getAlarms() async {
+    List<Alarm> _alarms = [];
+
+    var db = await this.database;
+    var result = await db.query(tableAlarm);
+    result.forEach((element) {
+      var alarm = Alarm.fromMap(element);
+      _alarms.add(alarm);
+    });
+
+    return _alarms;
   }
 }
