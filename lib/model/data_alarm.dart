@@ -1,8 +1,8 @@
-import 'package:light_alarm/model/Alarm.dart';
-import 'package:light_alarm/model/alarm_info.dart';
+import 'package:light_alarm/model/alarm.dart';
+import 'package:light_alarm/model/user.dart';
 
-List<AlarmInfo> tmp = [];
+List<Alarm> tmp = [];
 
-List<Alarm> alarms = [
-  Alarm(userId: -1, alarms: tmp),
+List<User> alarms = [
+  User(userId: -1, alarms: tmp),
 ];

@@ -20,10 +20,20 @@ Alarm _$AlarmFromJson(Map<String, dynamic> json) {
 class _$AlarmTearOff {
   const _$AlarmTearOff();
 
-  _Alarm call({required int userId, required List<AlarmInfo> alarms}) {
+  _Alarm call(
+      {required int id,
+      required String title,
+      required DateTime alarmDateTime,
+      required int isPending,
+      required int gradientColorIndex,
+      required String repeat}) {
     return _Alarm(
-      userId: userId,
-      alarms: alarms,
+      id: id,
+      title: title,
+      alarmDateTime: alarmDateTime,
+      isPending: isPending,
+      gradientColorIndex: gradientColorIndex,
+      repeat: repeat,
     );
   }
 
@@ -37,8 +47,12 @@ const $Alarm = _$AlarmTearOff();
 
 /// @nodoc
 mixin _$Alarm {
-  int get userId => throw _privateConstructorUsedError;
-  List<AlarmInfo> get alarms => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
+  DateTime get alarmDateTime => throw _privateConstructorUsedError;
+  int get isPending => throw _privateConstructorUsedError;
+  int get gradientColorIndex => throw _privateConstructorUsedError;
+  String get repeat => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -49,7 +63,13 @@ mixin _$Alarm {
 abstract class $AlarmCopyWith<$Res> {
   factory $AlarmCopyWith(Alarm value, $Res Function(Alarm) then) =
       _$AlarmCopyWithImpl<$Res>;
-  $Res call({int userId, List<AlarmInfo> alarms});
+  $Res call(
+      {int id,
+      String title,
+      DateTime alarmDateTime,
+      int isPending,
+      int gradientColorIndex,
+      String repeat});
 }
 
 /// @nodoc
@@ -62,18 +82,38 @@ class _$AlarmCopyWithImpl<$Res> implements $AlarmCopyWith<$Res> {
 
   @override
   $Res call({
-    Object? userId = freezed,
-    Object? alarms = freezed,
+    Object? id = freezed,
+    Object? title = freezed,
+    Object? alarmDateTime = freezed,
+    Object? isPending = freezed,
+    Object? gradientColorIndex = freezed,
+    Object? repeat = freezed,
   }) {
     return _then(_value.copyWith(
-      userId: userId == freezed
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as int,
-      alarms: alarms == freezed
-          ? _value.alarms
-          : alarms // ignore: cast_nullable_to_non_nullable
-              as List<AlarmInfo>,
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      alarmDateTime: alarmDateTime == freezed
+          ? _value.alarmDateTime
+          : alarmDateTime // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      isPending: isPending == freezed
+          ? _value.isPending
+          : isPending // ignore: cast_nullable_to_non_nullable
+              as int,
+      gradientColorIndex: gradientColorIndex == freezed
+          ? _value.gradientColorIndex
+          : gradientColorIndex // ignore: cast_nullable_to_non_nullable
+              as int,
+      repeat: repeat == freezed
+          ? _value.repeat
+          : repeat // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -83,7 +123,13 @@ abstract class _$AlarmCopyWith<$Res> implements $AlarmCopyWith<$Res> {
   factory _$AlarmCopyWith(_Alarm value, $Res Function(_Alarm) then) =
       __$AlarmCopyWithImpl<$Res>;
   @override
-  $Res call({int userId, List<AlarmInfo> alarms});
+  $Res call(
+      {int id,
+      String title,
+      DateTime alarmDateTime,
+      int isPending,
+      int gradientColorIndex,
+      String repeat});
 }
 
 /// @nodoc
@@ -97,18 +143,38 @@ class __$AlarmCopyWithImpl<$Res> extends _$AlarmCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? userId = freezed,
-    Object? alarms = freezed,
+    Object? id = freezed,
+    Object? title = freezed,
+    Object? alarmDateTime = freezed,
+    Object? isPending = freezed,
+    Object? gradientColorIndex = freezed,
+    Object? repeat = freezed,
   }) {
     return _then(_Alarm(
-      userId: userId == freezed
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as int,
-      alarms: alarms == freezed
-          ? _value.alarms
-          : alarms // ignore: cast_nullable_to_non_nullable
-              as List<AlarmInfo>,
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      alarmDateTime: alarmDateTime == freezed
+          ? _value.alarmDateTime
+          : alarmDateTime // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      isPending: isPending == freezed
+          ? _value.isPending
+          : isPending // ignore: cast_nullable_to_non_nullable
+              as int,
+      gradientColorIndex: gradientColorIndex == freezed
+          ? _value.gradientColorIndex
+          : gradientColorIndex // ignore: cast_nullable_to_non_nullable
+              as int,
+      repeat: repeat == freezed
+          ? _value.repeat
+          : repeat // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -117,36 +183,65 @@ class __$AlarmCopyWithImpl<$Res> extends _$AlarmCopyWithImpl<$Res>
 
 /// @nodoc
 class _$_Alarm implements _Alarm {
-  const _$_Alarm({required this.userId, required this.alarms});
+  const _$_Alarm(
+      {required this.id,
+      required this.title,
+      required this.alarmDateTime,
+      required this.isPending,
+      required this.gradientColorIndex,
+      required this.repeat});
 
   factory _$_Alarm.fromJson(Map<String, dynamic> json) =>
       _$_$_AlarmFromJson(json);
 
   @override
-  final int userId;
+  final int id;
   @override
-  final List<AlarmInfo> alarms;
+  final String title;
+  @override
+  final DateTime alarmDateTime;
+  @override
+  final int isPending;
+  @override
+  final int gradientColorIndex;
+  @override
+  final String repeat;
 
   @override
   String toString() {
-    return 'Alarm(userId: $userId, alarms: $alarms)';
+    return 'Alarm(id: $id, title: $title, alarmDateTime: $alarmDateTime, isPending: $isPending, gradientColorIndex: $gradientColorIndex, repeat: $repeat)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _Alarm &&
-            (identical(other.userId, userId) ||
-                const DeepCollectionEquality().equals(other.userId, userId)) &&
-            (identical(other.alarms, alarms) ||
-                const DeepCollectionEquality().equals(other.alarms, alarms)));
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.title, title) ||
+                const DeepCollectionEquality().equals(other.title, title)) &&
+            (identical(other.alarmDateTime, alarmDateTime) ||
+                const DeepCollectionEquality()
+                    .equals(other.alarmDateTime, alarmDateTime)) &&
+            (identical(other.isPending, isPending) ||
+                const DeepCollectionEquality()
+                    .equals(other.isPending, isPending)) &&
+            (identical(other.gradientColorIndex, gradientColorIndex) ||
+                const DeepCollectionEquality()
+                    .equals(other.gradientColorIndex, gradientColorIndex)) &&
+            (identical(other.repeat, repeat) ||
+                const DeepCollectionEquality().equals(other.repeat, repeat)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(userId) ^
-      const DeepCollectionEquality().hash(alarms);
+      const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(title) ^
+      const DeepCollectionEquality().hash(alarmDateTime) ^
+      const DeepCollectionEquality().hash(isPending) ^
+      const DeepCollectionEquality().hash(gradientColorIndex) ^
+      const DeepCollectionEquality().hash(repeat);
 
   @JsonKey(ignore: true)
   @override
@@ -160,15 +255,28 @@ class _$_Alarm implements _Alarm {
 }
 
 abstract class _Alarm implements Alarm {
-  const factory _Alarm({required int userId, required List<AlarmInfo> alarms}) =
-      _$_Alarm;
+  const factory _Alarm(
+      {required int id,
+      required String title,
+      required DateTime alarmDateTime,
+      required int isPending,
+      required int gradientColorIndex,
+      required String repeat}) = _$_Alarm;
 
   factory _Alarm.fromJson(Map<String, dynamic> json) = _$_Alarm.fromJson;
 
   @override
-  int get userId => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
   @override
-  List<AlarmInfo> get alarms => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
+  @override
+  DateTime get alarmDateTime => throw _privateConstructorUsedError;
+  @override
+  int get isPending => throw _privateConstructorUsedError;
+  @override
+  int get gradientColorIndex => throw _privateConstructorUsedError;
+  @override
+  String get repeat => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$AlarmCopyWith<_Alarm> get copyWith => throw _privateConstructorUsedError;

@@ -18,7 +18,7 @@ class _AlarmPageState extends State<AlarmPage> {
     return Scaffold(
       backgroundColor: CustomColors.pageBackgroundColor,
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 32, vertical: 64),
+        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 64),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -41,10 +41,10 @@ class _AlarmPageState extends State<AlarmPage> {
                   return ListView.builder(
                     itemCount: 1,
                     itemBuilder: (_, index) {
-                      return AlarmItem(alarmViewModel.alarm.alarmInfo[index]);
+                      return AlarmItem(alarmViewModel.alarm.alarms[index]);
                     },
                   );
-                  return Center(
+                  return const Center(
                     child: Text(
                       'Loading..',
                       style: TextStyle(color: Colors.white),

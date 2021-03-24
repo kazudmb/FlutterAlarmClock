@@ -3,9 +3,9 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:light_alarm/main.dart';
 import 'package:light_alarm/model/alarm.dart';
-import 'package:light_alarm/model/alarm_info.dart';
 import 'package:light_alarm/model/repository/alarm_repository.dart';
 import 'package:light_alarm/model/repository/alarm_repository_provider.dart';
+import 'package:light_alarm/model/user.dart';
 import 'package:light_alarm/view/dialog/alarm_delete_confirm_dialog.dart';
 import 'package:light_alarm/view/dialog/alarm_label_dialog.dart';
 import 'package:light_alarm/view/dialog/alarm_repeat_dialog.dart';
@@ -21,17 +21,17 @@ class AlarmViewModel extends ChangeNotifier {
   DateTime _alarmTime;
   String _alarmTimeString;
   AlarmHelper _alarmHelper = AlarmHelper();
-  Future<List<Alarm>> _alarms;
-  List<Alarm> _currentAlarms;
+  Future<List<User>> _alarms;
+  List<User> _currentAlarms;
   String label = 'アラーム';
   String repeatDayOfTheWeek = 'なし';
   bool _switchValue = false;
 
   final AlarmRepository _repository;
 
-  Alarm _alarm;
+  User _alarm;
 
-  Alarm get alarm => _alarm;
+  User get alarm => _alarm;
 
   void init() {
     _alarmTime = DateTime.now();
@@ -42,22 +42,22 @@ class AlarmViewModel extends ChangeNotifier {
   }
 
   void loadAlarms() {
-    _alarms = _alarmHelper.getAlarms();
+    _alarms = _alarmHelper.getUser();
   }
 
   Future<void> fetchAlarm() async {
     return _repository
         .getAlarm()
         .then((value) {
-          _alarm = value as Alarm;
+          _alarm = value as User;
         })
         .catchError((dynamic error) {})
         .whenComplete(() => notifyListeners());
   }
 
   void scheduleAlarm(
-      DateTime scheduledNotificationDateTime, Alarm alarmInfo) async {
-    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+      DateTime scheduledNotificationDateTime, Alarm alarm) async {
+    var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
       'alarm_notif',
       'alarm_notif',
       'Channel for Alarm notification',
@@ -66,7 +66,7 @@ class AlarmViewModel extends ChangeNotifier {
       largeIcon: DrawableResourceAndroidBitmap('codex_logo'),
     );
 
-    var iOSPlatformChannelSpecifics = IOSNotificationDetails(
+    var iOSPlatformChannelSpecifics = const IOSNotificationDetails(
         sound: 'a_long_cold_sting.wav',
         presentAlert: true,
         presentBadge: true,
@@ -75,7 +75,8 @@ class AlarmViewModel extends ChangeNotifier {
         android: androidPlatformChannelSpecifics,
         iOS: iOSPlatformChannelSpecifics);
 
-    await flutterLocalNotificationsPlugin.schedule(0, 'Office', alarmInfo.title,
+    // TODO(dmb): 通知内容の修正
+    await flutterLocalNotificationsPlugin.schedule(0, 'Office', '通知タイトル',
         scheduledNotificationDateTime, platformChannelSpecifics);
   }
 
@@ -84,17 +85,19 @@ class AlarmViewModel extends ChangeNotifier {
     if (_alarmTime.isAfter(DateTime.now()))
       scheduleAlarmDateTime = _alarmTime;
     else
-      scheduleAlarmDateTime = _alarmTime.add(Duration(days: 1));
+      scheduleAlarmDateTime = _alarmTime.add(const Duration(days: 1));
 
-    var alarmInfo = AlarmInfo(
+    // TODO(dmb): 正しいidをセットすること
+    var alarm = Alarm(
+      id: -1,
       alarmDateTime: scheduleAlarmDateTime,
       gradientColorIndex: _currentAlarms.length,
       title: label,
       repeat: repeatDayOfTheWeek,
       isPending: 0,
     );
-    _alarmHelper.insertAlarm(alarmInfo);
-    scheduleAlarm(scheduleAlarmDateTime, alarmInfo);
+    _alarmHelper.insertAlarm(alarm);
+    scheduleAlarm(scheduleAlarmDateTime, alarm);
     Navigator.pop(context);
     loadAlarms();
   }
@@ -110,9 +113,8 @@ class AlarmViewModel extends ChangeNotifier {
     loadAlarms();
   }
 
-  Future<String> showAlarmLabelDialog({
-    @required BuildContext context,
-    TransitionBuilder builder,
+  Future<String?> showAlarmLabelDialog({
+    required BuildContext context,
     bool useRootNavigator = true,
   }) {
     final Widget dialog = AlarmLabelDialog();
@@ -120,14 +122,13 @@ class AlarmViewModel extends ChangeNotifier {
       context: context,
       useRootNavigator: useRootNavigator,
       builder: (BuildContext context) {
-        return builder == null ? dialog : builder(context, dialog);
+        return dialog;
       },
     );
   }
 
-  Future<List<bool>> showAlarmRepeatDialog({
-    @required BuildContext context,
-    TransitionBuilder builder,
+  Future<List<bool>?> showAlarmRepeatDialog({
+    required BuildContext context,
     bool useRootNavigator = true,
   }) {
     final Widget dialog = AlarmRepeatDialog();
@@ -135,14 +136,13 @@ class AlarmViewModel extends ChangeNotifier {
       context: context,
       useRootNavigator: useRootNavigator,
       builder: (BuildContext context) {
-        return builder == null ? dialog : builder(context, dialog);
+        return dialog;
       },
     );
   }
 
-  Future<String> showAlarmDeleteConfirmDialog({
-    @required BuildContext context,
-    TransitionBuilder builder,
+  Future<String?> showAlarmDeleteConfirmDialog({
+    required BuildContext context,
     bool useRootNavigator = true,
   }) {
     final Widget dialog = AlarmDeleteConfirmDialog();
@@ -150,7 +150,7 @@ class AlarmViewModel extends ChangeNotifier {
       context: context,
       useRootNavigator: useRootNavigator,
       builder: (BuildContext context) {
-        return builder == null ? dialog : builder(context, dialog);
+        return dialog;
       },
     );
   }

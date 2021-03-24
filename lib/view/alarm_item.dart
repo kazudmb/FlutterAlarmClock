@@ -2,18 +2,24 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:light_alarm/constants/theme_dart.dart';
-import 'package:light_alarm/model/alarm_info.dart';
+import 'package:light_alarm/model/alarm.dart';
 
-class AlarmItem extends StatelessWidget {
+class AlarmItem extends StatefulWidget {
   const AlarmItem(this._alarmInfo);
 
-  final AlarmInfo _alarmInfo;
+  final Alarm _alarmInfo;
 
   @override
+  _AlarmItemState createState() => _AlarmItemState();
+}
+
+class _AlarmItemState extends State<AlarmItem> {
+  @override
   Widget build(BuildContext context) {
-    final alarmTime = DateFormat('hh:mm aa').format(_alarmInfo.alarmDateTime);
-    final gradientColor =
-        GradientTemplate.gradientTemplate[_alarmInfo.gradientColorIndex].colors;
+    final alarmTime =
+        DateFormat('hh:mm aa').format(widget._alarmInfo.alarmDateTime);
+    final gradientColor = GradientTemplate
+        .gradientTemplate[widget._alarmInfo.gradientColorIndex].colors;
 
     return Container(
       margin: const EdgeInsets.only(bottom: 32),
@@ -29,10 +35,10 @@ class AlarmItem extends StatelessWidget {
             color: gradientColor.last.withOpacity(0.4),
             blurRadius: 8,
             spreadRadius: 2,
-            offset: Offset(4, 4),
+            offset: const Offset(4, 4),
           ),
         ],
-        borderRadius: BorderRadius.all(Radius.circular(24)),
+        borderRadius: const BorderRadius.all(Radius.circular(24)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,47 +49,51 @@ class AlarmItem extends StatelessWidget {
               Row(
                 children: <Widget>[
                   Text(
-                    _alarmInfo.title,
-                    style: TextStyle(color: Colors.white, fontFamily: 'avenir'),
+                    widget._alarmInfo.title,
+                    style: const TextStyle(
+                        color: Colors.white, fontFamily: 'avenir'),
                   ),
                 ],
               ),
               Switch(
                 onChanged: (bool value) {
                   setState(() {
-                    _switchValue = value;
-                    updateIsPending(_alarmInfo.id, _switchValue ? 0 : 1);
+                    // TODO: ViewModelから取得したデータをセットすること
+                    // _switchValue = value;
+                    // TODO: スイッチを切り替えたタイミングでDBも更新すること
+                    // updateIsPending(widget._alarmInfo.id, _switchValue ? 0 : 1);
                   });
                 },
                 // value: _switchValue,
                 // TODO: スイッチの初期値を設定する方法を検討
-                value: _alarmInfo.isPending == 0 ? false : true,
+                value: widget._alarmInfo.isPending == 0 ? false : true,
                 activeColor: Colors.white,
               ),
             ],
           ),
           Text(
-            _alarmInfo.repeat,
-            style: TextStyle(color: Colors.white, fontFamily: 'avenir'),
+            widget._alarmInfo.repeat,
+            style: const TextStyle(color: Colors.white, fontFamily: 'avenir'),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(
                 alarmTime,
-                style: TextStyle(
+                style: const TextStyle(
                     color: Colors.white,
                     fontFamily: 'avenir',
                     fontSize: 24,
                     fontWeight: FontWeight.w700),
               ),
               IconButton(
-                  icon: Icon(Icons.delete),
+                  icon: const Icon(Icons.delete),
                   color: Colors.white,
                   onPressed: () async {
-                    await showAlarmDeleteConfirmDialog(context: context);
+                    // TODO: dialogの呼び出し
+                    // await showAlarmDeleteConfirmDialog(context: context);
                     // TODO: dialogのYes,Noを判定して処理を行う
-                    deleteAlarm(_alarmInfo.id);
+                    // deleteAlarm(widget._alarmInfo.id);
                   }),
             ],
           ),

@@ -27,10 +27,10 @@ class AlarmLabelDialogState extends State<AlarmLabelDialog> {
       ),
     ];
     final AlertDialog dialog = AlertDialog(
-      title: Text("ラベル"),
+      title: const Text("ラベル"),
       content: TextField(
         controller: dateTextController,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           hintText: "アラーム",
         ),
         autofocus: true,
