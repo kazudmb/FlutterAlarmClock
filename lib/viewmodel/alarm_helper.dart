@@ -13,7 +13,11 @@ final String columnRepeat = 'repeat';
 
 class AlarmHelper {
   factory AlarmHelper() {
-    AlarmHelper _alarmHelper = AlarmHelper();
+    print('called AlarmHelper()');
+    AlarmHelper? _alarmHelper;
+    if (_alarmHelper == null) {
+      _alarmHelper = AlarmHelper();
+    }
     return _alarmHelper;
   }
 

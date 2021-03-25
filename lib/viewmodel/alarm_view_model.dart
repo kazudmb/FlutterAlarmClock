@@ -3,8 +3,8 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:light_alarm/main.dart';
 import 'package:light_alarm/model/alarm.dart';
-import 'package:light_alarm/model/repository/alarm_repository.dart';
-import 'package:light_alarm/model/repository/alarm_repository_provider.dart';
+import 'package:light_alarm/model/repository/user_repository.dart';
+import 'package:light_alarm/model/repository/user_repository_provider.dart';
 import 'package:light_alarm/model/user.dart';
 import 'package:light_alarm/view/dialog/alarm_delete_confirm_dialog.dart';
 import 'package:light_alarm/view/dialog/alarm_label_dialog.dart';
@@ -12,28 +12,25 @@ import 'package:light_alarm/view/dialog/alarm_repeat_dialog.dart';
 import 'package:light_alarm/viewmodel/alarm_helper.dart';
 
 final alarmViewModelNotifierProvider = ChangeNotifierProvider(
-    (ref) => AlarmViewModel(repository: ref.read(alarmRepositoryProvider)));
+    (ref) => AlarmViewModel(ref.read(userRepositoryProvider)));
 
 class AlarmViewModel extends ChangeNotifier {
-  AlarmViewModel({required AlarmRepository repository})
-      : _repository = repository;
+  AlarmViewModel(this._repository);
 
-  DateTime _alarmTime;
-  String _alarmTimeString;
+  final UserRepository _repository;
+
+  DateTime _alarmTime = DateTime.now();
+  // TODO(dmb): ここで連続実行されているため、そこを解決すること
   AlarmHelper _alarmHelper = AlarmHelper();
-  Future<List<User>> _alarms;
-  List<User> _currentAlarms;
   String label = 'アラーム';
   String repeatDayOfTheWeek = 'なし';
-  bool _switchValue = false;
 
-  final AlarmRepository _repository;
+  User? _user;
 
-  User _alarm;
-
-  User get alarm => _alarm;
+  User? get user => _user;
 
   void init() {
+    print('called AlarmViewModel init()');
     _alarmTime = DateTime.now();
     _alarmHelper.initializeDatabase().then((value) {
       print('------database intialized');
@@ -42,18 +39,19 @@ class AlarmViewModel extends ChangeNotifier {
   }
 
   void loadAlarms() {
-    _alarms = _alarmHelper.getUser();
+    Future<List<User>> _alarms = _alarmHelper.getUser();
   }
 
-  Future<void> fetchAlarm() async {
-    return _repository
-        .getAlarm()
-        .then((value) {
-          _alarm = value as User;
-        })
-        .catchError((dynamic error) {})
-        .whenComplete(() => notifyListeners());
-  }
+  // TODO(dmb): user情報を取得する処理を復活させること
+  // Future<void> fetchUser() async {
+  //   return _repository
+  //       .getUser()
+  //       .then((value) {
+  //         _user = value as User;
+  //       })
+  //       .catchError((dynamic error) {})
+  //       .whenComplete(() => notifyListeners());
+  // }
 
   void scheduleAlarm(
       DateTime scheduledNotificationDateTime, Alarm alarm) async {
@@ -87,18 +85,19 @@ class AlarmViewModel extends ChangeNotifier {
     else
       scheduleAlarmDateTime = _alarmTime.add(const Duration(days: 1));
 
-    // TODO(dmb): 正しいidをセットすること
+    // TODO(dmb): 正しいid,gradientColorIndexをセットすること
     var alarm = Alarm(
       id: -1,
       alarmDateTime: scheduleAlarmDateTime,
-      gradientColorIndex: _currentAlarms.length,
+      gradientColorIndex: 1,
       title: label,
       repeat: repeatDayOfTheWeek,
       isPending: 0,
     );
     _alarmHelper.insertAlarm(alarm);
     scheduleAlarm(scheduleAlarmDateTime, alarm);
-    Navigator.pop(context);
+    // TODO(dmb): 画面遷移の処理を更新すること
+    // Navigator.pop(context);
     loadAlarms();
   }
 

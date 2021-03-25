@@ -53,7 +53,7 @@ class AlarmRepeatDialogState extends State<AlarmRepeatDialog> {
             ),
             CheckboxListTile(
               value: _checkBox[2],
-              title: Text('水曜日'),
+              title: const Text('水曜日'),
               controlAffinity: ListTileControlAffinity.trailing,
               onChanged: (bool? value) {
                 setState(() {
@@ -63,7 +63,7 @@ class AlarmRepeatDialogState extends State<AlarmRepeatDialog> {
             ),
             CheckboxListTile(
               value: _checkBox[3],
-              title: Text('木曜日'),
+              title: const Text('木曜日'),
               controlAffinity: ListTileControlAffinity.trailing,
               onChanged: (bool? value) {
                 setState(() {
@@ -73,7 +73,7 @@ class AlarmRepeatDialogState extends State<AlarmRepeatDialog> {
             ),
             CheckboxListTile(
               value: _checkBox[4],
-              title: Text('金曜日'),
+              title: const Text('金曜日'),
               controlAffinity: ListTileControlAffinity.trailing,
               onChanged: (bool? value) {
                 setState(() {
@@ -83,7 +83,7 @@ class AlarmRepeatDialogState extends State<AlarmRepeatDialog> {
             ),
             CheckboxListTile(
               value: _checkBox[5],
-              title: Text('土曜日'),
+              title: const Text('土曜日'),
               controlAffinity: ListTileControlAffinity.trailing,
               onChanged: (bool? value) {
                 setState(() {
@@ -93,7 +93,7 @@ class AlarmRepeatDialogState extends State<AlarmRepeatDialog> {
             ),
             CheckboxListTile(
               value: _checkBox[6],
-              title: Text('日曜日'),
+              title: const Text('日曜日'),
               controlAffinity: ListTileControlAffinity.trailing,
               onChanged: (bool? value) {
                 setState(() {

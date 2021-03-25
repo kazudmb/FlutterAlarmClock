@@ -33,15 +33,17 @@ class _AlarmPageState extends State<AlarmPage> {
             Expanded(
               child: HookBuilder(
                 builder: (context) {
+                  print('HookBuilder test');
                   final alarmViewModel =
                       context.read(alarmViewModelNotifierProvider);
-                  final alarm = useProvider(alarmViewModelNotifierProvider
-                      .select((value) => value.alarm));
+                  alarmViewModel.init();
+                  final user = useProvider(alarmViewModelNotifierProvider
+                      .select((value) => value.user));
 
                   return ListView.builder(
                     itemCount: 1,
                     itemBuilder: (_, index) {
-                      return AlarmItem(alarmViewModel.alarm.alarms[index]);
+                      return AlarmItem(alarmViewModel.user!.alarms[index]);
                     },
                   );
                   return const Center(
