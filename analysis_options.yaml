@@ -1,7 +1,7 @@
 analyzer:
   exclude:
-    - "lib/model/*.g.dart"
-    - "lib/model/*.freezed.dart"
+    - "lib/data.model/*.g.dart"
+    - "lib/data.model/*.freezed.dart"
 
 linter:
   rules:

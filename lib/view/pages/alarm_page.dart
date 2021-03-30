@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:light_alarm/constants/theme_dart.dart';
-import 'package:light_alarm/view/alarm_item.dart';
+import 'package:light_alarm/model/repository/alarm_helper.dart';
+import 'package:light_alarm/view/molecules/alarm_item.dart';
 import 'package:light_alarm/viewmodel/alarm_view_model.dart';
 
 final counterProvider = StateProvider((ref) => 0);
@@ -13,6 +14,16 @@ class AlarmPage extends StatefulWidget {
 }
 
 class _AlarmPageState extends State<AlarmPage> {
+  @override
+  void initState() {
+    print('AlarmPage initState()');
+    super.initState();
+    // TODO(dmb): dbの初期化を、viewに置きたくない
+    AlarmHelper().initializeDatabase().then((value) {
+      print('------database intialized');
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +47,6 @@ class _AlarmPageState extends State<AlarmPage> {
                   print('HookBuilder test');
                   final alarmViewModel =
                       context.read(alarmViewModelNotifierProvider);
-                  alarmViewModel.init();
                   final user = useProvider(alarmViewModelNotifierProvider
                       .select((value) => value.user));
 

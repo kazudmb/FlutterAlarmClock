@@ -9,7 +9,6 @@ import 'package:light_alarm/model/user.dart';
 import 'package:light_alarm/view/dialog/alarm_delete_confirm_dialog.dart';
 import 'package:light_alarm/view/dialog/alarm_label_dialog.dart';
 import 'package:light_alarm/view/dialog/alarm_repeat_dialog.dart';
-import 'package:light_alarm/viewmodel/alarm_helper.dart';
 
 final alarmViewModelNotifierProvider = ChangeNotifierProvider(
     (ref) => AlarmViewModel(ref.read(userRepositoryProvider)));
@@ -20,8 +19,6 @@ class AlarmViewModel extends ChangeNotifier {
   final UserRepository _repository;
 
   DateTime _alarmTime = DateTime.now();
-  // TODO(dmb): ここで連続実行されているため、そこを解決すること
-  AlarmHelper _alarmHelper = AlarmHelper();
   String label = 'アラーム';
   String repeatDayOfTheWeek = 'なし';
 
@@ -29,17 +26,8 @@ class AlarmViewModel extends ChangeNotifier {
 
   User? get user => _user;
 
-  void init() {
-    print('called AlarmViewModel init()');
-    _alarmTime = DateTime.now();
-    _alarmHelper.initializeDatabase().then((value) {
-      print('------database intialized');
-      loadAlarms();
-    });
-  }
-
   void loadAlarms() {
-    Future<List<User>> _alarms = _alarmHelper.getUser();
+    // Future<List<User>> _alarms = _alarmHelper.getUser();
   }
 
   // TODO(dmb): user情報を取得する処理を復活させること
@@ -94,7 +82,7 @@ class AlarmViewModel extends ChangeNotifier {
       repeat: repeatDayOfTheWeek,
       isPending: 0,
     );
-    _alarmHelper.insertAlarm(alarm);
+    // _alarmHelper.insertAlarm(alarm);
     scheduleAlarm(scheduleAlarmDateTime, alarm);
     // TODO(dmb): 画面遷移の処理を更新すること
     // Navigator.pop(context);
@@ -102,12 +90,12 @@ class AlarmViewModel extends ChangeNotifier {
   }
 
   void updateIsPending(int id, int isPending) {
-    _alarmHelper.updatePending(id, isPending);
+    // _alarmHelper.updatePending(id, isPending);
     loadAlarms();
   }
 
   void deleteAlarm(int id) {
-    _alarmHelper.delete(id);
+    // _alarmHelper.delete(id);
     //unsubscribe for notification
     loadAlarms();
   }
