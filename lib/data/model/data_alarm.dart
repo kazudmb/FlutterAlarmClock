@@ -1,5 +1,5 @@
-import 'package:light_alarm/model/alarm.dart';
-import 'package:light_alarm/model/user.dart';
+import 'package:light_alarm/data/model/alarm.dart';
+import 'package:light_alarm/data/model/user.dart';
 
 List<Alarm> tmp = [];
 

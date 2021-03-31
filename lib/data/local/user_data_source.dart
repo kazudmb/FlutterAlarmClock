@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-abstract class UserRepository {
+abstract class UserDataSource {
   Future<ThemeMode?> loadThemeMode();
-  Future<void> saveThemeMode(ThemeMode theme);
+
+  Future<void> saveThemeMode(ThemeMode? theme);
 }

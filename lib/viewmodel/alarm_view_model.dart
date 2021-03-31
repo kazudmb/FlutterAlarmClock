@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:light_alarm/data/model/alarm.dart';
+import 'package:light_alarm/data/model/user.dart';
+import 'package:light_alarm/data/provider/user_repository_provider.dart';
+import 'package:light_alarm/data/repository/user_repository.dart';
 import 'package:light_alarm/main.dart';
-import 'package:light_alarm/model/alarm.dart';
-import 'package:light_alarm/model/repository/user_repository.dart';
-import 'package:light_alarm/model/repository/user_repository_provider.dart';
-import 'package:light_alarm/model/user.dart';
 import 'package:light_alarm/view/dialog/alarm_delete_confirm_dialog.dart';
 import 'package:light_alarm/view/dialog/alarm_label_dialog.dart';
 import 'package:light_alarm/view/dialog/alarm_repeat_dialog.dart';

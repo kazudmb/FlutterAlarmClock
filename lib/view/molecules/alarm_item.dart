@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:light_alarm/constants/theme_dart.dart';
-import 'package:light_alarm/model/alarm.dart';
+import 'package:light_alarm/data/model/alarm.dart';
 
 class AlarmItem extends StatefulWidget {
   const AlarmItem(this._alarmInfo);

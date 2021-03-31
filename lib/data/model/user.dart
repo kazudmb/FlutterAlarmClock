@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:light_alarm/model/alarm.dart';
+import 'package:light_alarm/data/model/alarm.dart';
 
 part 'user.freezed.dart';
 part 'user.g.dart';

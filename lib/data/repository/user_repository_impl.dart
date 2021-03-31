@@ -1,30 +1,20 @@
-import 'package:light_alarm/constants/constant.dart';
-import 'package:light_alarm/model/repository/user_repository.dart';
-import 'package:light_alarm/model/user.dart';
-import 'package:sqflite/sqflite.dart';
+import 'package:flutter/material.dart';
+import 'package:light_alarm/data/local/user_data_source.dart';
+import 'package:light_alarm/data/repository/user_repository.dart';
 
 class UserRepositoryImpl implements UserRepository {
-  UserRepositoryImpl({required Database database}) : _database = database;
+  UserRepositoryImpl({required UserDataSource userDataSource})
+      : _userDataSource = userDataSource;
 
-  final Database _database;
+  final UserDataSource _userDataSource;
 
   @override
-  Future<User?> getUser() async {
-    print('called UserRepositoryImpl getUser()');
-    User? _user;
-    var db = await this._database;
-    var result = await db.query(Constant.tableName);
-    result.forEach((element) {
-      _user = User.fromJson(element);
-    });
-    return _user;
+  Future<ThemeMode?> loadThemeMode() {
+    return _userDataSource.loadThemeMode();
   }
 
   @override
-  Future<void> insertUser(User user) async {
-    print('called UserRepositoryImpl insertUser()');
-    var db = await this._database;
-    var result = await db.insert(Constant.tableName, user.toJson());
-    print('result : $result');
+  Future<void> saveThemeMode(ThemeMode theme) {
+    return _userDataSource.saveThemeMode(theme);
   }
 }
