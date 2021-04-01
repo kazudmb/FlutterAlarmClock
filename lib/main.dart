@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:light_alarm/view/pages/alarm_page.dart';
 
@@ -16,12 +17,12 @@ void main() async {
       requestBadgePermission: true,
       requestSoundPermission: true,
       onDidReceiveLocalNotification:
-          (int id, String title, String body, String payload) async {});
+          (int id, String? title, String? body, String? payload) async {});
   var initializationSettings = InitializationSettings(
       android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
   await flutterLocalNotificationsPlugin.initialize(initializationSettings,
-      onSelectNotification: (String payload) async {
-    debugPrint('notification payload: ' + payload);
+      onSelectNotification: (String? payload) async {
+    debugPrint('notification payload: ' + payload!);
   });
   runApp(ProviderScope(child: MyApp()));
 }

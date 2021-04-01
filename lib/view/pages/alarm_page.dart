@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:light_alarm/constants/theme_dart.dart';
-import 'package:light_alarm/data/repository/alarm_helper.dart';
 import 'package:light_alarm/view/molecules/alarm_item.dart';
 import 'package:light_alarm/viewmodel/alarm_view_model.dart';
 
@@ -14,16 +13,6 @@ class AlarmPage extends StatefulWidget {
 }
 
 class _AlarmPageState extends State<AlarmPage> {
-  @override
-  void initState() {
-    print('AlarmPage initState()');
-    super.initState();
-    // TODO(dmb): dbの初期化を、viewに置きたくない
-    AlarmHelper().initializeDatabase().then((value) {
-      print('------database intialized');
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,6 +39,7 @@ class _AlarmPageState extends State<AlarmPage> {
                   final user = useProvider(alarmViewModelNotifierProvider
                       .select((value) => value.user));
 
+                  // TODO(dmb): userにデータが入ってからリストを表示するようにすること(await とかが必要かも)
                   return ListView.builder(
                     itemCount: 1,
                     itemBuilder: (_, index) {

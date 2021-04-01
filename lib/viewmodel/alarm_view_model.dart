@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:light_alarm/data/model/alarm.dart';
 import 'package:light_alarm/data/model/user.dart';
@@ -29,16 +30,13 @@ class AlarmViewModel extends ChangeNotifier {
     // Future<List<User>> _alarms = _alarmHelper.getUser();
   }
 
-  // TODO(dmb): user情報を取得する処理を復活させること
-  // Future<void> fetchUser() async {
-  //   return _repository
-  //       .getUser()
-  //       .then((value) {
-  //         _user = value as User;
-  //       })
-  //       .catchError((dynamic error) {})
-  //       .whenComplete(() => notifyListeners());
-  // }
+  Future<void> fetchUser() async {
+    return _repository.getUser().then((value) {
+      _user = value;
+    }).catchError((dynamic error) {
+      print('fetchUser() error occured');
+    }).whenComplete(() => notifyListeners());
+  }
 
   void scheduleAlarm(
       DateTime scheduledNotificationDateTime, Alarm alarm) async {
