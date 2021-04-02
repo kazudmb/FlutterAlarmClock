@@ -30,12 +30,11 @@ class AlarmViewModel extends ChangeNotifier {
     // Future<List<User>> _alarms = _alarmHelper.getUser();
   }
 
-  Future<void> fetchUser() async {
-    return _repository.getUser().then((value) {
-      _user = value;
-    }).catchError((dynamic error) {
-      print('fetchUser() error occured');
-    }).whenComplete(() => notifyListeners());
+  Future<void> fetchUser() {
+    return _repository
+        .getUser()
+        .then((value) => _user = value)
+        .whenComplete(notifyListeners);
   }
 
   void scheduleAlarm(
