@@ -1,3 +1,4 @@
+import 'package:logger/logger.dart';
 import 'package:sqflite/sqflite.dart';
 
 class AppDatabase {
@@ -11,14 +12,22 @@ class AppDatabase {
 
   Database? _database;
 
-  Future<Database?> getDatabase() async {
-    _database ??= await _initializeDatabase().then((value) {
-      print('------database intialized');
-    });
-    return _database;
+  // singleton
+  static final AppDatabase _cache = AppDatabase._internal();
+  factory AppDatabase() {
+    return _cache;
+  }
+  AppDatabase._internal();
+
+  var logger = Logger();
+
+  Future<Database> getDatabase() async {
+    logger.d('called getDatabase()');
+    return _database ??= await _initializeDatabase();
   }
 
   Future<Database> _initializeDatabase() async {
+    logger.d('called _initializeDatabase()');
     var dir = await getDatabasesPath();
     var path = dir + "alarm.db";
 

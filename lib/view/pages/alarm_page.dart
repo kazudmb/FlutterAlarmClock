@@ -3,7 +3,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:light_alarm/constants/theme_dart.dart';
 import 'package:light_alarm/util/async_snapshot.dart';
-import 'package:light_alarm/view/molecules/alarm_item.dart';
 import 'package:light_alarm/viewmodel/alarm_view_model.dart';
 import 'package:light_alarm/viewmodel/loading_state_view_model.dart';
 
@@ -56,22 +55,24 @@ class _AlarmPageState extends State<AlarmPage> {
                         style: TextStyle(color: Colors.white),
                       ),
                     );
+                  } else {
+                    return const Text('Empty screen');
                   }
 
                   // TODO(dmb): 型がresultになっているのでその調査
-                  return user.when(success: (data) {
-                    if (data.alarms.isEmpty) {
-                      return const Text('Empty screen');
-                    }
-                    return ListView.builder(
-                      itemCount: 1,
-                      itemBuilder: (_, index) {
-                        return AlarmItem(data.alarms[index]);
-                      },
-                    );
-                  }, failure: (e) {
-                    return Text('Error Screen: $e');
-                  });
+                  // return user.when(success: (data) {
+                  //   if (data.alarms.isEmpty) {
+                  //     return const Text('Empty screen');
+                  //   }
+                  //   return ListView.builder(
+                  //     itemCount: 1,
+                  //     itemBuilder: (_, index) {
+                  //       return AlarmItem(data.alarms[index]);
+                  //     },
+                  //   );
+                  // }, failure: (e) {
+                  //   return Text('Error Screen: $e');
+                  // });
                 },
               ),
             ),

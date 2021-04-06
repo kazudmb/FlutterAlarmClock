@@ -10,7 +10,7 @@ class UserRepositoryImpl implements UserRepository {
   final UserDataSource _userDataSource;
 
   @override
-  void insertUser(User user) {
+  Future<void> insertUser(User user) {
     return _userDataSource.insertUser(user);
   }
 
@@ -20,12 +20,12 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<int> updatePending(int id, int isPending) {
+  Future<int?> updatePending(int id, int isPending) {
     return _userDataSource.updatePending(id, isPending);
   }
 
   @override
-  Future<int> delete(int id) {
+  Future<int?> delete(int id) {
     return _userDataSource.delete(id);
   }
 

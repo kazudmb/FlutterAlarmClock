@@ -8,6 +8,7 @@ part 'user.g.dart';
 abstract class User with _$User {
   const factory User({
     required int userId,
+    // TODO(dmb): requiredがないとエラーになるのでその対応から
     required List<Alarm> alarms,
   }) = _User;
 

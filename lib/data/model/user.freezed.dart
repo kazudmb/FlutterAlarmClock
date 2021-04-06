@@ -37,7 +37,8 @@ const $User = _$UserTearOff();
 
 /// @nodoc
 mixin _$User {
-  int get userId => throw _privateConstructorUsedError;
+  int get userId =>
+      throw _privateConstructorUsedError; // TODO(dmb): requiredがないとエラーになるのでその対応から
   List<Alarm> get alarms => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -124,7 +125,7 @@ class _$_User implements _User {
 
   @override
   final int userId;
-  @override
+  @override // TODO(dmb): requiredがないとエラーになるのでその対応から
   final List<Alarm> alarms;
 
   @override
@@ -167,7 +168,7 @@ abstract class _User implements User {
 
   @override
   int get userId => throw _privateConstructorUsedError;
-  @override
+  @override // TODO(dmb): requiredがないとエラーになるのでその対応から
   List<Alarm> get alarms => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
