@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:light_alarm/data/model/alarm.dart';
 
 part 'user.freezed.dart';
 part 'user.g.dart';
@@ -8,8 +7,6 @@ part 'user.g.dart';
 abstract class User with _$User {
   const factory User({
     required int userId,
-    // TODO(dmb): requiredがないとエラーになるのでその対応から
-    required List<Alarm> alarms,
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

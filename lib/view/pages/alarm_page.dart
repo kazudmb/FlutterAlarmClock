@@ -39,16 +39,27 @@ class _AlarmPageState extends State<AlarmPage> {
                       context.read(alarmViewModelNotifierProvider);
                   final user = useProvider(alarmViewModelNotifierProvider
                       .select((value) => value.user));
-                  final snapshot = useFuture(
+                  final alarms = useProvider(alarmViewModelNotifierProvider
+                      .select((value) => value.alarms));
+                  final userSnapshot = useFuture(
                       useMemoized(() {
                         return context
                             .read(loadingStateProvider)
                             .whileLoading(alarmViewModel.fetchUser);
                       }, [user?.toString()]),
                       initialData: null);
+                  final alarmsSnapshot = useFuture(
+                      useMemoized(() {
+                        return context
+                            .read(loadingStateProvider)
+                            .whileLoading(alarmViewModel.fetchAlarm);
+                      }, [user?.toString()]),
+                      initialData: null);
 
                   // Not yet load the contents.
-                  if (!snapshot.isDone || user == null) {
+                  if (!userSnapshot.isDone ||
+                      !alarmsSnapshot.isDone ||
+                      user == null) {
                     return const Center(
                       child: Text(
                         'Loading..',

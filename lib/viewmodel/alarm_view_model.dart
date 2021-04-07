@@ -3,37 +3,48 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:light_alarm/data/model/alarm.dart';
 import 'package:light_alarm/data/model/user.dart';
+import 'package:light_alarm/data/provider/alarm_repository_provider.dart';
 import 'package:light_alarm/data/provider/user_repository_provider.dart';
+import 'package:light_alarm/data/repository/alarm_repository.dart';
 import 'package:light_alarm/data/repository/user_repository.dart';
 import 'package:light_alarm/main.dart';
 import 'package:light_alarm/view/dialog/alarm_delete_confirm_dialog.dart';
 import 'package:light_alarm/view/dialog/alarm_label_dialog.dart';
 import 'package:light_alarm/view/dialog/alarm_repeat_dialog.dart';
 
-final alarmViewModelNotifierProvider = ChangeNotifierProvider(
-    (ref) => AlarmViewModel(ref.read(userRepositoryProvider)));
+final alarmViewModelNotifierProvider =
+    ChangeNotifierProvider((ref) => AlarmViewModel(
+          ref.read(userRepositoryProvider),
+          ref.read(alarmRepositoryProvider),
+        ));
 
 class AlarmViewModel extends ChangeNotifier {
-  AlarmViewModel(this._repository);
+  AlarmViewModel(this._userRepository, this._alarmRepository);
 
-  final UserRepository _repository;
+  final UserRepository _userRepository;
+  final AlarmRepository _alarmRepository;
 
   DateTime _alarmTime = DateTime.now();
   String label = 'アラーム';
   String repeatDayOfTheWeek = 'なし';
 
   User? _user;
-
   User? get user => _user;
 
-  void loadAlarms() {
-    // Future<List<User>> _alarms = _alarmHelper.getUser();
-  }
+  List<Alarm>? _alarms;
+  List<Alarm>? get alarms => _alarms;
 
   Future<void> fetchUser() {
-    return _repository
-        .getUser()
+    return _userRepository
+        .fetchUser()
         .then((value) => _user = value)
+        .whenComplete(notifyListeners);
+  }
+
+  Future<void> fetchAlarm() {
+    return _alarmRepository
+        .fetchAlarms()
+        .then((value) => _alarms = value)
         .whenComplete(notifyListeners);
   }
 
@@ -62,7 +73,7 @@ class AlarmViewModel extends ChangeNotifier {
         scheduledNotificationDateTime, platformChannelSpecifics);
   }
 
-  void onSaveAlarm(String label, String repeatDayOfTheWeek) {
+  Future<void> saveAlarm(String label, String repeatDayOfTheWeek) async {
     DateTime scheduleAlarmDateTime;
     if (_alarmTime.isAfter(DateTime.now()))
       scheduleAlarmDateTime = _alarmTime;
@@ -78,22 +89,23 @@ class AlarmViewModel extends ChangeNotifier {
       repeat: repeatDayOfTheWeek,
       isPending: 0,
     );
-    // _alarmHelper.insertAlarm(alarm);
+    await _alarmRepository.insertAlarm(alarm).whenComplete(notifyListeners);
     scheduleAlarm(scheduleAlarmDateTime, alarm);
     // TODO(dmb): 画面遷移の処理を更新すること
     // Navigator.pop(context);
-    loadAlarms();
+    fetchAlarm();
   }
 
-  void updateIsPending(int id, int isPending) {
-    // _alarmHelper.updatePending(id, isPending);
-    loadAlarms();
+  Future<void> updateIsPending(int alarmId, int isPending) async {
+    await _alarmRepository
+        .updatePending(alarmId, isPending)
+        .whenComplete(notifyListeners);
+    fetchAlarm();
   }
 
-  void deleteAlarm(int id) {
-    // _alarmHelper.delete(id);
-    //unsubscribe for notification
-    loadAlarms();
+  Future<void> deleteAlarm(int id) async {
+    await _alarmRepository.deleteAlarm(id).whenComplete(notifyListeners);
+    fetchAlarm();
   }
 
   Future<String?> showAlarmLabelDialog({

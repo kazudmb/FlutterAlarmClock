@@ -2,8 +2,14 @@ import 'package:logger/logger.dart';
 import 'package:sqflite/sqflite.dart';
 
 class AppDatabase {
+  /// User
+  final String tableUser = 'user';
+  final String columnUserId = 'userId';
+  final String columnAlarm = 'alarm';
+
+  /// Alarm
   final String tableAlarm = 'alarm';
-  final String columnId = 'id';
+  final String columnAlarmId = 'alarmId';
   final String columnTitle = 'title';
   final String columnDateTime = 'alarmDateTime';
   final String columnPending = 'isPending';
@@ -36,8 +42,13 @@ class AppDatabase {
       version: 1,
       onCreate: (db, version) {
         db.execute('''
+          create table $tableUser ( 
+          $columnUserId integer primary key autoincrement)
+        ''');
+        db.execute('''
           create table $tableAlarm ( 
-          $columnId integer primary key autoincrement, 
+          $columnUserId integer,
+          $columnAlarmId integer primary key autoincrement, 
           $columnTitle text not null,
           $columnDateTime text not null,
           $columnPending integer not null,

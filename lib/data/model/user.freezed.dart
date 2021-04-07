@@ -20,10 +20,9 @@ User _$UserFromJson(Map<String, dynamic> json) {
 class _$UserTearOff {
   const _$UserTearOff();
 
-  _User call({required int userId, required List<Alarm> alarms}) {
+  _User call({required int userId}) {
     return _User(
       userId: userId,
-      alarms: alarms,
     );
   }
 
@@ -37,9 +36,7 @@ const $User = _$UserTearOff();
 
 /// @nodoc
 mixin _$User {
-  int get userId =>
-      throw _privateConstructorUsedError; // TODO(dmb): requiredがないとエラーになるのでその対応から
-  List<Alarm> get alarms => throw _privateConstructorUsedError;
+  int get userId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -50,7 +47,7 @@ mixin _$User {
 abstract class $UserCopyWith<$Res> {
   factory $UserCopyWith(User value, $Res Function(User) then) =
       _$UserCopyWithImpl<$Res>;
-  $Res call({int userId, List<Alarm> alarms});
+  $Res call({int userId});
 }
 
 /// @nodoc
@@ -64,17 +61,12 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
   @override
   $Res call({
     Object? userId = freezed,
-    Object? alarms = freezed,
   }) {
     return _then(_value.copyWith(
       userId: userId == freezed
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as int,
-      alarms: alarms == freezed
-          ? _value.alarms
-          : alarms // ignore: cast_nullable_to_non_nullable
-              as List<Alarm>,
     ));
   }
 }
@@ -84,7 +76,7 @@ abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
   factory _$UserCopyWith(_User value, $Res Function(_User) then) =
       __$UserCopyWithImpl<$Res>;
   @override
-  $Res call({int userId, List<Alarm> alarms});
+  $Res call({int userId});
 }
 
 /// @nodoc
@@ -99,17 +91,12 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
   @override
   $Res call({
     Object? userId = freezed,
-    Object? alarms = freezed,
   }) {
     return _then(_User(
       userId: userId == freezed
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as int,
-      alarms: alarms == freezed
-          ? _value.alarms
-          : alarms // ignore: cast_nullable_to_non_nullable
-              as List<Alarm>,
     ));
   }
 }
@@ -118,19 +105,17 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
 
 /// @nodoc
 class _$_User implements _User {
-  const _$_User({required this.userId, required this.alarms});
+  const _$_User({required this.userId});
 
   factory _$_User.fromJson(Map<String, dynamic> json) =>
       _$_$_UserFromJson(json);
 
   @override
   final int userId;
-  @override // TODO(dmb): requiredがないとエラーになるのでその対応から
-  final List<Alarm> alarms;
 
   @override
   String toString() {
-    return 'User(userId: $userId, alarms: $alarms)';
+    return 'User(userId: $userId)';
   }
 
   @override
@@ -138,16 +123,12 @@ class _$_User implements _User {
     return identical(this, other) ||
         (other is _User &&
             (identical(other.userId, userId) ||
-                const DeepCollectionEquality().equals(other.userId, userId)) &&
-            (identical(other.alarms, alarms) ||
-                const DeepCollectionEquality().equals(other.alarms, alarms)));
+                const DeepCollectionEquality().equals(other.userId, userId)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(userId) ^
-      const DeepCollectionEquality().hash(alarms);
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(userId);
 
   @JsonKey(ignore: true)
   @override
@@ -161,15 +142,12 @@ class _$_User implements _User {
 }
 
 abstract class _User implements User {
-  const factory _User({required int userId, required List<Alarm> alarms}) =
-      _$_User;
+  const factory _User({required int userId}) = _$_User;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
 
   @override
   int get userId => throw _privateConstructorUsedError;
-  @override // TODO(dmb): requiredがないとエラーになるのでその対応から
-  List<Alarm> get alarms => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$UserCopyWith<_User> get copyWith => throw _privateConstructorUsedError;
