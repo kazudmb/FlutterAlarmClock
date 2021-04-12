@@ -1,10 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:light_alarm/constants/theme_dart.dart';
 import 'package:light_alarm/util/async_snapshot.dart';
+import 'package:light_alarm/view/molecules/header.dart';
 import 'package:light_alarm/viewmodel/alarm_view_model.dart';
 import 'package:light_alarm/viewmodel/loading_state_view_model.dart';
+import 'package:logger/logger.dart';
 
 final counterProvider = StateProvider((ref) => 0);
 
@@ -14,23 +18,18 @@ class AlarmPage extends StatefulWidget {
 }
 
 class _AlarmPageState extends State<AlarmPage> {
+  var logger = Logger();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: Header(),
       backgroundColor: CustomColors.pageBackgroundColor,
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 64),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(
-              'Alarm',
-              style: TextStyle(
-                  fontFamily: 'avenir',
-                  fontWeight: FontWeight.w700,
-                  color: CustomColors.primaryTextColor,
-                  fontSize: 24),
-            ),
             Expanded(
               child: HookBuilder(
                 builder: (context) {
@@ -67,7 +66,7 @@ class _AlarmPageState extends State<AlarmPage> {
                       ),
                     );
                   } else {
-                    return const Text('Empty screen');
+                    return const Text('Loading Success!!');
                   }
 
                   // TODO(dmb): 型がresultになっているのでその調査
@@ -90,6 +89,8 @@ class _AlarmPageState extends State<AlarmPage> {
           ],
         ),
       ),
+      // TODO(dmb): タイマーを実装する段階で追加すること
+      // bottomNavigationBar: const Footer(),
     );
   }
 }

@@ -54,9 +54,9 @@ class AlarmViewModel extends ChangeNotifier {
       'alarm_notif',
       'alarm_notif',
       'Channel for Alarm notification',
-      icon: 'codex_logo',
+      icon: 'app_icon',
       sound: RawResourceAndroidNotificationSound('a_long_cold_sting'),
-      largeIcon: DrawableResourceAndroidBitmap('codex_logo'),
+      largeIcon: DrawableResourceAndroidBitmap('app_icon'),
     );
 
     var iOSPlatformChannelSpecifics = const IOSNotificationDetails(
@@ -82,7 +82,7 @@ class AlarmViewModel extends ChangeNotifier {
 
     // TODO(dmb): 正しいid,gradientColorIndexをセットすること
     var alarm = Alarm(
-      id: -1,
+      alarmId: -1,
       alarmDateTime: scheduleAlarmDateTime,
       gradientColorIndex: 1,
       title: label,
