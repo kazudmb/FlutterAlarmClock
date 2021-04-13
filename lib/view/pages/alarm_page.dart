@@ -5,7 +5,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:light_alarm/constants/theme_dart.dart';
 import 'package:light_alarm/util/async_snapshot.dart';
-import 'package:light_alarm/view/molecules/header.dart';
+import 'package:light_alarm/view/molecules/alarm_header.dart';
 import 'package:light_alarm/viewmodel/alarm_view_model.dart';
 import 'package:light_alarm/viewmodel/loading_state_view_model.dart';
 import 'package:logger/logger.dart';
@@ -22,8 +22,9 @@ class _AlarmPageState extends State<AlarmPage> {
 
   @override
   Widget build(BuildContext context) {
+    final alarmViewModel = context.read(alarmViewModelNotifierProvider);
     return Scaffold(
-      appBar: Header(),
+      appBar: AlarmHeader(alarmViewModel),
       backgroundColor: CustomColors.pageBackgroundColor,
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 64),
@@ -34,8 +35,6 @@ class _AlarmPageState extends State<AlarmPage> {
               child: HookBuilder(
                 builder: (context) {
                   print('HookBuilder test');
-                  final alarmViewModel =
-                      context.read(alarmViewModelNotifierProvider);
                   final user = useProvider(alarmViewModelNotifierProvider
                       .select((value) => value.user));
                   final alarms = useProvider(alarmViewModelNotifierProvider

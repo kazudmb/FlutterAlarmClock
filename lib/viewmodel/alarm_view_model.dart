@@ -73,6 +73,7 @@ class AlarmViewModel extends ChangeNotifier {
         scheduledNotificationDateTime, platformChannelSpecifics);
   }
 
+  // TODO(dmb): _alarmTimeを引数に追加すること
   Future<void> saveAlarm(String label, String repeatDayOfTheWeek) async {
     DateTime scheduleAlarmDateTime;
     if (_alarmTime.isAfter(DateTime.now()))
@@ -108,6 +109,7 @@ class AlarmViewModel extends ChangeNotifier {
     fetchAlarm();
   }
 
+  /// Dialog表示(Alarm label)
   Future<String?> showAlarmLabelDialog({
     required BuildContext context,
     bool useRootNavigator = true,
@@ -122,6 +124,7 @@ class AlarmViewModel extends ChangeNotifier {
     );
   }
 
+  /// Dialog表示(Alarm Repeat)
   Future<List<bool>?> showAlarmRepeatDialog({
     required BuildContext context,
     bool useRootNavigator = true,
@@ -136,6 +139,7 @@ class AlarmViewModel extends ChangeNotifier {
     );
   }
 
+  /// Dialog表示(Alarm Delete)
   Future<String?> showAlarmDeleteConfirmDialog({
     required BuildContext context,
     bool useRootNavigator = true,
@@ -150,12 +154,15 @@ class AlarmViewModel extends ChangeNotifier {
     );
   }
 
-  String getRepeatDayOfTheWeek(List<bool> checkboxState) {
+  /// 繰り返し情報の取得
+  String getRepeatDayOfTheWeek(List<bool>? checkboxState) {
     String repeatDayOfTheWeek = '';
     List<String> dayOfTheWeek = ['月 ', '火 ', '水 ', '木 ', '金 ', '土 ', '日 '];
-    for (int i = 0; i < checkboxState.length; i++) {
-      if (checkboxState[i]) {
-        repeatDayOfTheWeek = repeatDayOfTheWeek + dayOfTheWeek[i];
+    if (checkboxState != null) {
+      for (int i = 0; i < checkboxState.length; i++) {
+        if (checkboxState[i]) {
+          repeatDayOfTheWeek = repeatDayOfTheWeek + dayOfTheWeek[i];
+        }
       }
     }
     if (repeatDayOfTheWeek.isEmpty) {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class Footer extends StatefulWidget {
-  const Footer();
+class AlarmFooter extends StatefulWidget {
+  const AlarmFooter();
 
   @override
   _Footer createState() => _Footer();
