@@ -74,7 +74,12 @@ class AlarmViewModel extends ChangeNotifier {
   }
 
   // TODO(dmb): _alarmTimeを引数に追加すること
-  Future<void> saveAlarm(String label, String repeatDayOfTheWeek) async {
+  Future<void> saveAlarm(
+    int alarmId,
+    DateTime alarmTime,
+    String? label,
+    String repeatDayOfTheWeek,
+  ) async {
     DateTime scheduleAlarmDateTime;
     if (_alarmTime.isAfter(DateTime.now()))
       scheduleAlarmDateTime = _alarmTime;
@@ -83,10 +88,10 @@ class AlarmViewModel extends ChangeNotifier {
 
     // TODO(dmb): 正しいid,gradientColorIndexをセットすること
     var alarm = Alarm(
-      alarmId: -1,
+      alarmId: alarmId,
       alarmDateTime: scheduleAlarmDateTime,
       gradientColorIndex: 1,
-      title: label,
+      title: label ?? '',
       repeat: repeatDayOfTheWeek,
       isPending: 0,
     );
@@ -112,9 +117,10 @@ class AlarmViewModel extends ChangeNotifier {
   /// Dialog表示(Alarm label)
   Future<String?> showAlarmLabelDialog({
     required BuildContext context,
+    required String label,
     bool useRootNavigator = true,
   }) {
-    final Widget dialog = AlarmLabelDialog();
+    final Widget dialog = AlarmLabelDialog(label);
     return showDialog(
       context: context,
       useRootNavigator: useRootNavigator,
@@ -127,9 +133,10 @@ class AlarmViewModel extends ChangeNotifier {
   /// Dialog表示(Alarm Repeat)
   Future<List<bool>?> showAlarmRepeatDialog({
     required BuildContext context,
+    required List<bool>? repeatDayOfTheWeekCheckbox,
     bool useRootNavigator = true,
   }) {
-    final Widget dialog = AlarmRepeatDialog();
+    final Widget dialog = AlarmRepeatDialog(repeatDayOfTheWeekCheckbox);
     return showDialog(
       context: context,
       useRootNavigator: useRootNavigator,

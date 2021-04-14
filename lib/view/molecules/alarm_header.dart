@@ -35,9 +35,24 @@ class AlarmHeader extends StatelessWidget with PreferredSizeWidget {
 
   /// Alarm追加のモーダルシートを表示
   void showModal(BuildContext context) {
+    // 現在時刻
     String _alarmTimeString = DateFormat('HH:mm').format(DateTime.now());
+    // アラームの設定時間
+    DateTime? _alarmTime;
+    // アラームラベル
     String? label = '';
-    String repeatDayOfTheWeek = '';
+    // 繰り返しフラグ
+    List<bool>? repeatDayOfTheWeekCheckbox = [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+    ];
+    // 繰り返し曜日文字
+    String repeatDayOfTheWeekString = 'なし';
 
     // ModalBottomSheetの表示
     showModalBottomSheet(
@@ -56,7 +71,11 @@ class AlarmHeader extends StatelessWidget with PreferredSizeWidget {
               padding: const EdgeInsets.all(32),
               child: Column(
                 children: [
-                  FlatButton(
+                  TextButton(
+                    child: Text(
+                      _alarmTimeString,
+                      style: const TextStyle(fontSize: 32),
+                    ),
                     onPressed: () async {
                       var selectedTime = await showTimePicker(
                         context: context,
@@ -71,47 +90,63 @@ class AlarmHeader extends StatelessWidget with PreferredSizeWidget {
                           selectedTime.hour,
                           selectedTime.minute,
                         );
-                        // _alarmTime = selectedDateTime;
+                        _alarmTime = selectedDateTime;
                         setModalState(() {
                           _alarmTimeString =
                               DateFormat('HH:mm').format(selectedDateTime);
                         });
                       }
                     },
-                    child: Text(
-                      _alarmTimeString,
-                      style: const TextStyle(fontSize: 32),
-                    ),
                   ),
-                  // TODO: 曜日の変更をできるようにすること
                   GestureDetector(
-                    onTap: () async {
-                      List<bool>? checkbox = await _alarmViewModel
-                          .showAlarmRepeatDialog(context: context);
-                      repeatDayOfTheWeek =
-                          _alarmViewModel.getRepeatDayOfTheWeek(checkbox);
-                      logger.d(repeatDayOfTheWeek);
-                    },
                     child: ListTile(
                       title: const Text('繰り返し'),
-                      trailing: Text(repeatDayOfTheWeek),
+                      trailing: Text(repeatDayOfTheWeekString),
+                      onTap: () async {
+                        List<bool>? returnValue =
+                            await _alarmViewModel.showAlarmRepeatDialog(
+                          context: context,
+                          repeatDayOfTheWeekCheckbox:
+                              repeatDayOfTheWeekCheckbox,
+                        );
+                        if (returnValue != null) {
+                          repeatDayOfTheWeekCheckbox = returnValue;
+                        }
+                        setModalState(() {
+                          repeatDayOfTheWeekString =
+                              _alarmViewModel.getRepeatDayOfTheWeek(
+                                  repeatDayOfTheWeekCheckbox);
+                        });
+                        logger.d(repeatDayOfTheWeekString);
+                      },
                     ),
                   ),
-                  // TODO: タイトルの変更をできるようにすること
                   GestureDetector(
-                    onTap: () async {
-                      label = await _alarmViewModel.showAlarmLabelDialog(
-                          context: context);
-                      logger.d(label);
-                    },
                     child: ListTile(
                       title: const Text('ラベル'),
                       trailing: Text(label ?? ''),
+                      onTap: () async {
+                        String? returnValue =
+                            await _alarmViewModel.showAlarmLabelDialog(
+                          context: context,
+                          label: label ?? '',
+                        );
+                        if (returnValue != null) {
+                          label = returnValue;
+                        }
+                        logger.d(label);
+                      },
                     ),
                   ),
                   FloatingActionButton.extended(
                     onPressed: () {
-                      // _alarmViewModel.saveAlarm(label, repeatDayOfTheWeek);
+                      // TODO(dmb): 正しいalarmIdを渡すこと
+                      _alarmViewModel.saveAlarm(
+                        -1,
+                        _alarmTime ?? DateTime.now(),
+                        label,
+                        repeatDayOfTheWeekString,
+                      );
                     },
                     icon: const Icon(Icons.alarm),
                     label: const Text('Save'),

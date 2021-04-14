@@ -2,26 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class AlarmRepeatDialog extends StatefulWidget {
+  AlarmRepeatDialog(this._repeatDayOfTheWeekCheckbox);
+  final List<bool>? _repeatDayOfTheWeekCheckbox;
   @override
-  State createState() => AlarmRepeatDialogState();
+  State createState() => AlarmRepeatDialogState(_repeatDayOfTheWeekCheckbox);
 }
 
 class AlarmRepeatDialogState extends State<AlarmRepeatDialog> {
+  AlarmRepeatDialogState(this._repeatDayOfTheWeekCheckbox);
+  final List<bool>? _repeatDayOfTheWeekCheckbox;
   final dateTextController = TextEditingController();
-  List<bool> _checkBox = [false, false, false, false, false, false, false];
 
   @override
   Widget build(BuildContext context) {
     MaterialLocalizations localizations = MaterialLocalizations.of(context);
     final List<Widget> actions = [
-      FlatButton(
+      TextButton(
         child: Text(localizations.cancelButtonLabel),
         onPressed: () => Navigator.pop(context),
       ),
-      FlatButton(
+      TextButton(
         child: Text(localizations.okButtonLabel),
         onPressed: () {
-          Navigator.pop(context, _checkBox);
+          Navigator.pop(context, _repeatDayOfTheWeekCheckbox);
         },
       ),
     ];
@@ -31,73 +34,74 @@ class AlarmRepeatDialogState extends State<AlarmRepeatDialog> {
         width: double.maxFinite,
         child: Column(
           children: [
+            // TODO(dmb): ループで回すように修正したい
             CheckboxListTile(
-              value: _checkBox[0],
+              value: _repeatDayOfTheWeekCheckbox?[0],
               title: const Text('月曜日'),
               controlAffinity: ListTileControlAffinity.trailing,
               onChanged: (bool? value) {
                 setState(() {
-                  _checkBox[0] = value ?? false;
+                  _repeatDayOfTheWeekCheckbox?[0] = value ?? false;
                 });
               },
             ),
             CheckboxListTile(
-              value: _checkBox[1],
+              value: _repeatDayOfTheWeekCheckbox?[1],
               title: const Text('火曜日'),
               controlAffinity: ListTileControlAffinity.trailing,
               onChanged: (bool? value) {
                 setState(() {
-                  _checkBox[1] = value ?? false;
+                  _repeatDayOfTheWeekCheckbox?[1] = value ?? false;
                 });
               },
             ),
             CheckboxListTile(
-              value: _checkBox[2],
+              value: _repeatDayOfTheWeekCheckbox?[2],
               title: const Text('水曜日'),
               controlAffinity: ListTileControlAffinity.trailing,
               onChanged: (bool? value) {
                 setState(() {
-                  _checkBox[2] = value ?? false;
+                  _repeatDayOfTheWeekCheckbox?[2] = value ?? false;
                 });
               },
             ),
             CheckboxListTile(
-              value: _checkBox[3],
+              value: _repeatDayOfTheWeekCheckbox?[3],
               title: const Text('木曜日'),
               controlAffinity: ListTileControlAffinity.trailing,
               onChanged: (bool? value) {
                 setState(() {
-                  _checkBox[3] = value ?? false;
+                  _repeatDayOfTheWeekCheckbox?[3] = value ?? false;
                 });
               },
             ),
             CheckboxListTile(
-              value: _checkBox[4],
+              value: _repeatDayOfTheWeekCheckbox?[4],
               title: const Text('金曜日'),
               controlAffinity: ListTileControlAffinity.trailing,
               onChanged: (bool? value) {
                 setState(() {
-                  _checkBox[4] = value ?? false;
+                  _repeatDayOfTheWeekCheckbox?[4] = value ?? false;
                 });
               },
             ),
             CheckboxListTile(
-              value: _checkBox[5],
+              value: _repeatDayOfTheWeekCheckbox?[5],
               title: const Text('土曜日'),
               controlAffinity: ListTileControlAffinity.trailing,
               onChanged: (bool? value) {
                 setState(() {
-                  _checkBox[5] = value ?? false;
+                  _repeatDayOfTheWeekCheckbox?[5] = value ?? false;
                 });
               },
             ),
             CheckboxListTile(
-              value: _checkBox[6],
+              value: _repeatDayOfTheWeekCheckbox?[6],
               title: const Text('日曜日'),
               controlAffinity: ListTileControlAffinity.trailing,
               onChanged: (bool? value) {
                 setState(() {
-                  _checkBox[6] = value ?? false;
+                  _repeatDayOfTheWeekCheckbox?[6] = value ?? false;
                 });
               },
             ),

@@ -2,22 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class AlarmLabelDialog extends StatefulWidget {
+  AlarmLabelDialog(this._alarmLabel);
+  final String _alarmLabel;
   @override
-  State createState() => AlarmLabelDialogState();
+  State createState() => AlarmLabelDialogState(_alarmLabel);
 }
 
 class AlarmLabelDialogState extends State<AlarmLabelDialog> {
+  AlarmLabelDialogState(this._alarmLabel);
+  final String _alarmLabel;
   final dateTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     MaterialLocalizations localizations = MaterialLocalizations.of(context);
+    dateTextController.value = dateTextController.value.copyWith(
+      text: _alarmLabel,
+    );
     final List<Widget> actions = [
-      FlatButton(
+      TextButton(
         child: Text(localizations.cancelButtonLabel),
         onPressed: () => Navigator.pop(context),
       ),
-      FlatButton(
+      TextButton(
         child: Text(localizations.okButtonLabel),
         onPressed: () {
           // TODO バリデーション
