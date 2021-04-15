@@ -15,7 +15,7 @@ class UserDataSourceImpl extends UserDataSource {
     var db = await _database.getDatabase();
     var result = await db.query(_database.tableUser);
     if (result.isEmpty) {
-      await insertUser(const User(userId: 0));
+      await insertUser(const User());
       // 再起呼び出し
       return fetchUser();
     } else {

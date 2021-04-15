@@ -6,7 +6,7 @@ part 'alarm.g.dart';
 @freezed
 abstract class Alarm with _$Alarm {
   const factory Alarm({
-    required int alarmId,
+    int? alarmId,
     required String title,
     required DateTime alarmDateTime,
     required int isPending,

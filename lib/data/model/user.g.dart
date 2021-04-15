@@ -8,7 +8,7 @@ part of 'user.dart';
 
 _$_User _$_$_UserFromJson(Map<String, dynamic> json) {
   return _$_User(
-    userId: json['userId'] as int,
+    userId: json['userId'] as int?,
   );
 }
 

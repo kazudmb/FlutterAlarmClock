@@ -117,7 +117,6 @@ class AlarmHeader extends StatelessWidget with PreferredSizeWidget {
                               _alarmViewModel.getRepeatDayOfTheWeek(
                                   repeatDayOfTheWeekCheckbox);
                         });
-                        logger.d(repeatDayOfTheWeekString);
                       },
                     ),
                   ),
@@ -134,7 +133,6 @@ class AlarmHeader extends StatelessWidget with PreferredSizeWidget {
                         if (returnValue != null) {
                           label = returnValue;
                         }
-                        logger.d(label);
                       },
                     ),
                   ),
@@ -142,7 +140,6 @@ class AlarmHeader extends StatelessWidget with PreferredSizeWidget {
                     onPressed: () {
                       // TODO(dmb): 正しいalarmIdを渡すこと
                       _alarmViewModel.saveAlarm(
-                        -1,
                         _alarmTime ?? DateTime.now(),
                         label,
                         repeatDayOfTheWeekString,

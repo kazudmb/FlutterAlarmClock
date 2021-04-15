@@ -6,6 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:light_alarm/constants/theme_dart.dart';
 import 'package:light_alarm/util/async_snapshot.dart';
 import 'package:light_alarm/view/molecules/alarm_header.dart';
+import 'package:light_alarm/view/molecules/alarm_item.dart';
 import 'package:light_alarm/viewmodel/alarm_view_model.dart';
 import 'package:light_alarm/viewmodel/loading_state_view_model.dart';
 import 'package:logger/logger.dart';
@@ -34,7 +35,6 @@ class _AlarmPageState extends State<AlarmPage> {
             Expanded(
               child: HookBuilder(
                 builder: (context) {
-                  print('HookBuilder test');
                   final user = useProvider(alarmViewModelNotifierProvider
                       .select((value) => value.user));
                   final alarms = useProvider(alarmViewModelNotifierProvider
@@ -51,7 +51,7 @@ class _AlarmPageState extends State<AlarmPage> {
                         return context
                             .read(loadingStateProvider)
                             .whileLoading(alarmViewModel.fetchAlarm);
-                      }, [user?.toString()]),
+                      }, [alarms?.toString()]),
                       initialData: null);
 
                   // Not yet load the contents.
@@ -65,23 +65,16 @@ class _AlarmPageState extends State<AlarmPage> {
                       ),
                     );
                   } else {
-                    return const Text('Loading Success!!');
+                    if (alarms == null || alarms.isEmpty) {
+                      return const Text('Empty screen');
+                    }
+                    return ListView.builder(
+                      itemCount: alarms.length,
+                      itemBuilder: (_, index) {
+                        return AlarmItem(alarms[index]);
+                      },
+                    );
                   }
-
-                  // TODO(dmb): 型がresultになっているのでその調査
-                  // return user.when(success: (data) {
-                  //   if (data.alarms.isEmpty) {
-                  //     return const Text('Empty screen');
-                  //   }
-                  //   return ListView.builder(
-                  //     itemCount: 1,
-                  //     itemBuilder: (_, index) {
-                  //       return AlarmItem(data.alarms[index]);
-                  //     },
-                  //   );
-                  // }, failure: (e) {
-                  //   return Text('Error Screen: $e');
-                  // });
                 },
               ),
             ),

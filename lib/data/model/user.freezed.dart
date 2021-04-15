@@ -20,7 +20,7 @@ User _$UserFromJson(Map<String, dynamic> json) {
 class _$UserTearOff {
   const _$UserTearOff();
 
-  _User call({required int userId}) {
+  _User call({int? userId}) {
     return _User(
       userId: userId,
     );
@@ -36,7 +36,7 @@ const $User = _$UserTearOff();
 
 /// @nodoc
 mixin _$User {
-  int get userId => throw _privateConstructorUsedError;
+  int? get userId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -47,7 +47,7 @@ mixin _$User {
 abstract class $UserCopyWith<$Res> {
   factory $UserCopyWith(User value, $Res Function(User) then) =
       _$UserCopyWithImpl<$Res>;
-  $Res call({int userId});
+  $Res call({int? userId});
 }
 
 /// @nodoc
@@ -66,7 +66,7 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
       userId: userId == freezed
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
     ));
   }
 }
@@ -76,7 +76,7 @@ abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
   factory _$UserCopyWith(_User value, $Res Function(_User) then) =
       __$UserCopyWithImpl<$Res>;
   @override
-  $Res call({int userId});
+  $Res call({int? userId});
 }
 
 /// @nodoc
@@ -96,7 +96,7 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
       userId: userId == freezed
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
     ));
   }
 }
@@ -105,13 +105,13 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
 
 /// @nodoc
 class _$_User implements _User {
-  const _$_User({required this.userId});
+  const _$_User({this.userId});
 
   factory _$_User.fromJson(Map<String, dynamic> json) =>
       _$_$_UserFromJson(json);
 
   @override
-  final int userId;
+  final int? userId;
 
   @override
   String toString() {
@@ -142,12 +142,12 @@ class _$_User implements _User {
 }
 
 abstract class _User implements User {
-  const factory _User({required int userId}) = _$_User;
+  const factory _User({int? userId}) = _$_User;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
 
   @override
-  int get userId => throw _privateConstructorUsedError;
+  int? get userId => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$UserCopyWith<_User> get copyWith => throw _privateConstructorUsedError;

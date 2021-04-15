@@ -8,7 +8,7 @@ part of 'alarm.dart';
 
 _$_Alarm _$_$_AlarmFromJson(Map<String, dynamic> json) {
   return _$_Alarm(
-    alarmId: json['alarmId'] as int,
+    alarmId: json['alarmId'] as int?,
     title: json['title'] as String,
     alarmDateTime: DateTime.parse(json['alarmDateTime'] as String),
     isPending: json['isPending'] as int,

@@ -54,16 +54,12 @@ class AlarmViewModel extends ChangeNotifier {
       'alarm_notif',
       'alarm_notif',
       'Channel for Alarm notification',
-      icon: 'app_icon',
-      sound: RawResourceAndroidNotificationSound('a_long_cold_sting'),
-      largeIcon: DrawableResourceAndroidBitmap('app_icon'),
+      icon: 'doroid',
+      largeIcon: DrawableResourceAndroidBitmap('doroid'),
     );
 
     var iOSPlatformChannelSpecifics = const IOSNotificationDetails(
-        sound: 'a_long_cold_sting.wav',
-        presentAlert: true,
-        presentBadge: true,
-        presentSound: true);
+        presentAlert: true, presentBadge: true, presentSound: true);
     var platformChannelSpecifics = NotificationDetails(
         android: androidPlatformChannelSpecifics,
         iOS: iOSPlatformChannelSpecifics);
@@ -75,7 +71,6 @@ class AlarmViewModel extends ChangeNotifier {
 
   // TODO(dmb): _alarmTimeを引数に追加すること
   Future<void> saveAlarm(
-    int alarmId,
     DateTime alarmTime,
     String? label,
     String repeatDayOfTheWeek,
@@ -88,7 +83,6 @@ class AlarmViewModel extends ChangeNotifier {
 
     // TODO(dmb): 正しいid,gradientColorIndexをセットすること
     var alarm = Alarm(
-      alarmId: alarmId,
       alarmDateTime: scheduleAlarmDateTime,
       gradientColorIndex: 1,
       title: label ?? '',

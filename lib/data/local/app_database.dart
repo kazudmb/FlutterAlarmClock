@@ -28,12 +28,10 @@ class AppDatabase {
   var logger = Logger();
 
   Future<Database> getDatabase() async {
-    logger.d('called getDatabase()');
     return _database ??= await _initializeDatabase();
   }
 
   Future<Database> _initializeDatabase() async {
-    logger.d('called _initializeDatabase()');
     var dir = await getDatabasesPath();
     var path = dir + "alarm.db";
 

@@ -21,7 +21,7 @@ class _$AlarmTearOff {
   const _$AlarmTearOff();
 
   _Alarm call(
-      {required int alarmId,
+      {int? alarmId,
       required String title,
       required DateTime alarmDateTime,
       required int isPending,
@@ -47,7 +47,7 @@ const $Alarm = _$AlarmTearOff();
 
 /// @nodoc
 mixin _$Alarm {
-  int get alarmId => throw _privateConstructorUsedError;
+  int? get alarmId => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   DateTime get alarmDateTime => throw _privateConstructorUsedError;
   int get isPending => throw _privateConstructorUsedError;
@@ -64,7 +64,7 @@ abstract class $AlarmCopyWith<$Res> {
   factory $AlarmCopyWith(Alarm value, $Res Function(Alarm) then) =
       _$AlarmCopyWithImpl<$Res>;
   $Res call(
-      {int alarmId,
+      {int? alarmId,
       String title,
       DateTime alarmDateTime,
       int isPending,
@@ -93,7 +93,7 @@ class _$AlarmCopyWithImpl<$Res> implements $AlarmCopyWith<$Res> {
       alarmId: alarmId == freezed
           ? _value.alarmId
           : alarmId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -124,7 +124,7 @@ abstract class _$AlarmCopyWith<$Res> implements $AlarmCopyWith<$Res> {
       __$AlarmCopyWithImpl<$Res>;
   @override
   $Res call(
-      {int alarmId,
+      {int? alarmId,
       String title,
       DateTime alarmDateTime,
       int isPending,
@@ -154,7 +154,7 @@ class __$AlarmCopyWithImpl<$Res> extends _$AlarmCopyWithImpl<$Res>
       alarmId: alarmId == freezed
           ? _value.alarmId
           : alarmId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -184,7 +184,7 @@ class __$AlarmCopyWithImpl<$Res> extends _$AlarmCopyWithImpl<$Res>
 /// @nodoc
 class _$_Alarm implements _Alarm {
   const _$_Alarm(
-      {required this.alarmId,
+      {this.alarmId,
       required this.title,
       required this.alarmDateTime,
       required this.isPending,
@@ -195,7 +195,7 @@ class _$_Alarm implements _Alarm {
       _$_$_AlarmFromJson(json);
 
   @override
-  final int alarmId;
+  final int? alarmId;
   @override
   final String title;
   @override
@@ -257,7 +257,7 @@ class _$_Alarm implements _Alarm {
 
 abstract class _Alarm implements Alarm {
   const factory _Alarm(
-      {required int alarmId,
+      {int? alarmId,
       required String title,
       required DateTime alarmDateTime,
       required int isPending,
@@ -267,7 +267,7 @@ abstract class _Alarm implements Alarm {
   factory _Alarm.fromJson(Map<String, dynamic> json) = _$_Alarm.fromJson;
 
   @override
-  int get alarmId => throw _privateConstructorUsedError;
+  int? get alarmId => throw _privateConstructorUsedError;
   @override
   String get title => throw _privateConstructorUsedError;
   @override

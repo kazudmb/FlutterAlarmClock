@@ -11,11 +11,11 @@ class AlarmDataSourceImpl extends AlarmDataSource {
 
   @override
   Future<List<Alarm>?> fetchAlarms() async {
-    List<Alarm>? _alarms;
+    List<Alarm>? _alarms = [];
     var db = await _database.getDatabase();
     var result = await db.query(_database.tableAlarm);
     result.forEach((element) {
-      _alarms?.add(Alarm.fromJson(element));
+      _alarms.add(Alarm.fromJson(element));
     });
     logger.d(_alarms);
     return _alarms;
