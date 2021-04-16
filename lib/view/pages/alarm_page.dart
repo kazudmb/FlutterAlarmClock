@@ -28,7 +28,6 @@ class _AlarmPageState extends State<AlarmPage> {
       appBar: AlarmHeader(alarmViewModel),
       backgroundColor: CustomColors.pageBackgroundColor,
       body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 64),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -71,7 +70,7 @@ class _AlarmPageState extends State<AlarmPage> {
                     return ListView.builder(
                       itemCount: alarms.length,
                       itemBuilder: (_, index) {
-                        return AlarmItem(alarms[index]);
+                        return AlarmItem(alarmViewModel, alarms[index]);
                       },
                     );
                   }

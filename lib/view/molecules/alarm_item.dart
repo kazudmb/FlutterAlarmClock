@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:light_alarm/constants/theme_dart.dart';
 import 'package:light_alarm/data/model/alarm.dart';
+import 'package:light_alarm/viewmodel/alarm_view_model.dart';
 
 class AlarmItem extends StatefulWidget {
-  const AlarmItem(this._alarmInfo);
-
+  const AlarmItem(this._alarmViewModel, this._alarmInfo);
+  final AlarmViewModel _alarmViewModel;
   final Alarm _alarmInfo;
-
   @override
   _AlarmItemState createState() => _AlarmItemState();
 }
@@ -90,10 +90,14 @@ class _AlarmItemState extends State<AlarmItem> {
                   icon: const Icon(Icons.delete),
                   color: Colors.white,
                   onPressed: () async {
-                    // TODO: dialogの呼び出し
-                    // await showAlarmDeleteConfirmDialog(context: context);
-                    // TODO: dialogのYes,Noを判定して処理を行う
-                    // deleteAlarm(widget._alarmInfo.id);
+                    bool? returnValue = await widget._alarmViewModel
+                        .showAlarmDeleteConfirmDialog(context: context);
+                    if (returnValue != null) {
+                      if (returnValue) {
+                        widget._alarmViewModel
+                            .deleteAlarm((widget._alarmInfo.alarmId!));
+                      }
+                    }
                   }),
             ],
           ),

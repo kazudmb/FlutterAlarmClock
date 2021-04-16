@@ -5,19 +5,18 @@ class AlarmLabelDialog extends StatefulWidget {
   AlarmLabelDialog(this._alarmLabel);
   final String _alarmLabel;
   @override
-  State createState() => AlarmLabelDialogState(_alarmLabel);
+  State createState() => AlarmLabelDialogState();
 }
 
 class AlarmLabelDialogState extends State<AlarmLabelDialog> {
-  AlarmLabelDialogState(this._alarmLabel);
-  final String _alarmLabel;
+  AlarmLabelDialogState();
   final dateTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     MaterialLocalizations localizations = MaterialLocalizations.of(context);
     dateTextController.value = dateTextController.value.copyWith(
-      text: _alarmLabel,
+      text: widget._alarmLabel,
     );
     final List<Widget> actions = [
       TextButton(

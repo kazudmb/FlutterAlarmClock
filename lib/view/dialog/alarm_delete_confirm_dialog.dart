@@ -11,17 +11,16 @@ class AlarmDeleteConfirmDialogState extends State<AlarmDeleteConfirmDialog> {
   @override
   Widget build(BuildContext context) {
     final CupertinoAlertDialog dialog = CupertinoAlertDialog(
-      title: const Text("削除しますか？"),
-      content: const Text("メッセージ"),
+      title: const Text("アラームを削除しますか？"),
       actions: <Widget>[
         CupertinoDialogAction(
           child: const Text("キャンセル"),
           isDestructiveAction: false,
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => Navigator.pop(context, false),
         ),
         CupertinoDialogAction(
           child: const Text("OK"),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => Navigator.pop(context, true),
         ),
       ],
     );

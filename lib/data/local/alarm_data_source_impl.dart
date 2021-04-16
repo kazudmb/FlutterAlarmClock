@@ -40,7 +40,9 @@ class AlarmDataSourceImpl extends AlarmDataSource {
   @override
   Future<int?> deleteAlarm(int id) async {
     var db = await _database.getDatabase();
-    return await db.delete(_database.tableAlarm,
-        where: '$_database.columnId = ?', whereArgs: [id]);
+    var result = await db
+        .delete(_database.tableAlarm, where: 'alarmId = ?', whereArgs: [id]);
+    logger.d('count: $result');
+    return result;
   }
 }

@@ -141,7 +141,7 @@ class AlarmViewModel extends ChangeNotifier {
   }
 
   /// Dialog表示(Alarm Delete)
-  Future<String?> showAlarmDeleteConfirmDialog({
+  Future<bool?> showAlarmDeleteConfirmDialog({
     required BuildContext context,
     bool useRootNavigator = true,
   }) {

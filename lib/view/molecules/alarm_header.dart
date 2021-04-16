@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 import 'package:light_alarm/viewmodel/alarm_view_model.dart';
 import 'package:logger/logger.dart';
 
-// TODO(dmb): ViewModelを渡して、ViewModel側でメソッドを実行すること
 class AlarmHeader extends StatelessWidget with PreferredSizeWidget {
   AlarmHeader(this._alarmViewModel);
 
