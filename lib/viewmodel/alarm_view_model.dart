@@ -48,8 +48,7 @@ class AlarmViewModel extends ChangeNotifier {
         .whenComplete(notifyListeners);
   }
 
-  void scheduleAlarm(
-      DateTime scheduledNotificationDateTime, Alarm alarm) async {
+  void scheduleAlarm(DateTime scheduledNotificationDateTime) async {
     var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
       'alarm_notif',
       'alarm_notif',
@@ -64,12 +63,11 @@ class AlarmViewModel extends ChangeNotifier {
         android: androidPlatformChannelSpecifics,
         iOS: iOSPlatformChannelSpecifics);
 
-    // TODO(dmb): 通知内容の修正
+    // TODO(dmb): deprecated対応
     await flutterLocalNotificationsPlugin.schedule(0, 'Office', '通知タイトル',
         scheduledNotificationDateTime, platformChannelSpecifics);
   }
 
-  // TODO(dmb): _alarmTimeを引数に追加すること
   Future<void> saveAlarm(
     DateTime alarmTime,
     String? label,
@@ -81,16 +79,14 @@ class AlarmViewModel extends ChangeNotifier {
     else
       scheduleAlarmDateTime = _alarmTime.add(const Duration(days: 1));
 
-    // TODO(dmb): 正しいid,gradientColorIndexをセットすること
     var alarm = Alarm(
       alarmDateTime: scheduleAlarmDateTime,
-      gradientColorIndex: 1,
       title: label ?? '',
       repeat: repeatDayOfTheWeek,
       isPending: 0,
     );
     await _alarmRepository.insertAlarm(alarm).whenComplete(notifyListeners);
-    scheduleAlarm(scheduleAlarmDateTime, alarm);
+    scheduleAlarm(scheduleAlarmDateTime);
     // TODO(dmb): 画面遷移の処理を更新すること
     // Navigator.pop(context);
     fetchAlarm();

@@ -13,7 +13,6 @@ class AppDatabase {
   final String columnTitle = 'title';
   final String columnDateTime = 'alarmDateTime';
   final String columnPending = 'isPending';
-  final String columnColorIndex = 'gradientColorIndex';
   final String columnRepeat = 'repeat';
 
   Database? _database;
@@ -50,7 +49,6 @@ class AppDatabase {
           $columnTitle text not null,
           $columnDateTime text not null,
           $columnPending integer not null,
-          $columnColorIndex integer,
           $columnRepeat text not null)
         ''');
       },

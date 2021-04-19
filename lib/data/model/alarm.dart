@@ -10,7 +10,6 @@ abstract class Alarm with _$Alarm {
     required String title,
     required DateTime alarmDateTime,
     required int isPending,
-    required int gradientColorIndex,
     required String repeat,
   }) = _Alarm;
 

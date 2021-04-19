@@ -18,21 +18,20 @@ class _AlarmItemState extends State<AlarmItem> {
   Widget build(BuildContext context) {
     final alarmTime =
         DateFormat('hh:mm aa').format(widget._alarmInfo.alarmDateTime);
-    final gradientColor = GradientTemplate
-        .gradientTemplate[widget._alarmInfo.gradientColorIndex].colors;
 
     return Container(
       margin: const EdgeInsets.only(bottom: 32),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: gradientColor,
+          colors: GradientTemplate.gradientTemplate[0].colors,
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
         ),
         boxShadow: [
           BoxShadow(
-            color: gradientColor.last.withOpacity(0.4),
+            color: GradientTemplate.gradientTemplate[0].colors.last
+                .withOpacity(0.4),
             blurRadius: 8,
             spreadRadius: 2,
             offset: const Offset(4, 4),
@@ -57,15 +56,11 @@ class _AlarmItemState extends State<AlarmItem> {
               ),
               Switch(
                 onChanged: (bool value) {
-                  setState(() {
-                    // TODO: ViewModelから取得したデータをセットすること
-                    // _switchValue = value;
-                    // TODO: スイッチを切り替えたタイミングでDBも更新すること
-                    // updateIsPending(widget._alarmInfo.id, _switchValue ? 0 : 1);
+                  setState(() async {
+                    await widget._alarmViewModel.updateIsPending(
+                        widget._alarmInfo.alarmId!, value ? 1 : 0);
                   });
                 },
-                // value: _switchValue,
-                // TODO: スイッチの初期値を設定する方法を検討
                 value: widget._alarmInfo.isPending == 0 ? false : true,
                 activeColor: Colors.white,
               ),

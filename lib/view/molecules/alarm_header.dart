@@ -24,8 +24,6 @@ class AlarmHeader extends StatelessWidget with PreferredSizeWidget {
           padding: const EdgeInsets.all(8.0),
           onPressed: () {
             showModal(context);
-            // TODO(dmb) 下記のメソッドも実行すること
-            // scheduleAlarm();
           },
         ),
       ],
@@ -137,7 +135,6 @@ class AlarmHeader extends StatelessWidget with PreferredSizeWidget {
                   ),
                   FloatingActionButton.extended(
                     onPressed: () {
-                      // TODO(dmb): 正しいalarmIdを渡すこと
                       _alarmViewModel.saveAlarm(
                         _alarmTime ?? DateTime.now(),
                         label,

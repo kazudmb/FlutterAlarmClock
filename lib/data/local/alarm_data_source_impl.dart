@@ -33,8 +33,10 @@ class AlarmDataSourceImpl extends AlarmDataSource {
     var values = <String, dynamic>{
       _database.columnPending: isPending,
     };
-    return await db.update(_database.tableAlarm, values,
-        where: '$_database.columnId = ?', whereArgs: [id]);
+    var result = await db.update(_database.tableAlarm, values,
+        where: 'alarmId = ?', whereArgs: [id]);
+    logger.d('count: $result');
+    return result;
   }
 
   @override

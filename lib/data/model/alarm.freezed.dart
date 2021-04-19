@@ -25,14 +25,12 @@ class _$AlarmTearOff {
       required String title,
       required DateTime alarmDateTime,
       required int isPending,
-      required int gradientColorIndex,
       required String repeat}) {
     return _Alarm(
       alarmId: alarmId,
       title: title,
       alarmDateTime: alarmDateTime,
       isPending: isPending,
-      gradientColorIndex: gradientColorIndex,
       repeat: repeat,
     );
   }
@@ -51,7 +49,6 @@ mixin _$Alarm {
   String get title => throw _privateConstructorUsedError;
   DateTime get alarmDateTime => throw _privateConstructorUsedError;
   int get isPending => throw _privateConstructorUsedError;
-  int get gradientColorIndex => throw _privateConstructorUsedError;
   String get repeat => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -68,7 +65,6 @@ abstract class $AlarmCopyWith<$Res> {
       String title,
       DateTime alarmDateTime,
       int isPending,
-      int gradientColorIndex,
       String repeat});
 }
 
@@ -86,7 +82,6 @@ class _$AlarmCopyWithImpl<$Res> implements $AlarmCopyWith<$Res> {
     Object? title = freezed,
     Object? alarmDateTime = freezed,
     Object? isPending = freezed,
-    Object? gradientColorIndex = freezed,
     Object? repeat = freezed,
   }) {
     return _then(_value.copyWith(
@@ -106,10 +101,6 @@ class _$AlarmCopyWithImpl<$Res> implements $AlarmCopyWith<$Res> {
           ? _value.isPending
           : isPending // ignore: cast_nullable_to_non_nullable
               as int,
-      gradientColorIndex: gradientColorIndex == freezed
-          ? _value.gradientColorIndex
-          : gradientColorIndex // ignore: cast_nullable_to_non_nullable
-              as int,
       repeat: repeat == freezed
           ? _value.repeat
           : repeat // ignore: cast_nullable_to_non_nullable
@@ -128,7 +119,6 @@ abstract class _$AlarmCopyWith<$Res> implements $AlarmCopyWith<$Res> {
       String title,
       DateTime alarmDateTime,
       int isPending,
-      int gradientColorIndex,
       String repeat});
 }
 
@@ -147,7 +137,6 @@ class __$AlarmCopyWithImpl<$Res> extends _$AlarmCopyWithImpl<$Res>
     Object? title = freezed,
     Object? alarmDateTime = freezed,
     Object? isPending = freezed,
-    Object? gradientColorIndex = freezed,
     Object? repeat = freezed,
   }) {
     return _then(_Alarm(
@@ -167,10 +156,6 @@ class __$AlarmCopyWithImpl<$Res> extends _$AlarmCopyWithImpl<$Res>
           ? _value.isPending
           : isPending // ignore: cast_nullable_to_non_nullable
               as int,
-      gradientColorIndex: gradientColorIndex == freezed
-          ? _value.gradientColorIndex
-          : gradientColorIndex // ignore: cast_nullable_to_non_nullable
-              as int,
       repeat: repeat == freezed
           ? _value.repeat
           : repeat // ignore: cast_nullable_to_non_nullable
@@ -188,7 +173,6 @@ class _$_Alarm implements _Alarm {
       required this.title,
       required this.alarmDateTime,
       required this.isPending,
-      required this.gradientColorIndex,
       required this.repeat});
 
   factory _$_Alarm.fromJson(Map<String, dynamic> json) =>
@@ -203,13 +187,11 @@ class _$_Alarm implements _Alarm {
   @override
   final int isPending;
   @override
-  final int gradientColorIndex;
-  @override
   final String repeat;
 
   @override
   String toString() {
-    return 'Alarm(alarmId: $alarmId, title: $title, alarmDateTime: $alarmDateTime, isPending: $isPending, gradientColorIndex: $gradientColorIndex, repeat: $repeat)';
+    return 'Alarm(alarmId: $alarmId, title: $title, alarmDateTime: $alarmDateTime, isPending: $isPending, repeat: $repeat)';
   }
 
   @override
@@ -227,9 +209,6 @@ class _$_Alarm implements _Alarm {
             (identical(other.isPending, isPending) ||
                 const DeepCollectionEquality()
                     .equals(other.isPending, isPending)) &&
-            (identical(other.gradientColorIndex, gradientColorIndex) ||
-                const DeepCollectionEquality()
-                    .equals(other.gradientColorIndex, gradientColorIndex)) &&
             (identical(other.repeat, repeat) ||
                 const DeepCollectionEquality().equals(other.repeat, repeat)));
   }
@@ -241,7 +220,6 @@ class _$_Alarm implements _Alarm {
       const DeepCollectionEquality().hash(title) ^
       const DeepCollectionEquality().hash(alarmDateTime) ^
       const DeepCollectionEquality().hash(isPending) ^
-      const DeepCollectionEquality().hash(gradientColorIndex) ^
       const DeepCollectionEquality().hash(repeat);
 
   @JsonKey(ignore: true)
@@ -261,7 +239,6 @@ abstract class _Alarm implements Alarm {
       required String title,
       required DateTime alarmDateTime,
       required int isPending,
-      required int gradientColorIndex,
       required String repeat}) = _$_Alarm;
 
   factory _Alarm.fromJson(Map<String, dynamic> json) = _$_Alarm.fromJson;
@@ -274,8 +251,6 @@ abstract class _Alarm implements Alarm {
   DateTime get alarmDateTime => throw _privateConstructorUsedError;
   @override
   int get isPending => throw _privateConstructorUsedError;
-  @override
-  int get gradientColorIndex => throw _privateConstructorUsedError;
   @override
   String get repeat => throw _privateConstructorUsedError;
   @override
