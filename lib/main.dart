@@ -3,12 +3,19 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:light_alarm/view/pages/alarm_page.dart';
+import 'package:timezone/data/latest.dart' as tz;
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 
+// TODO(dmb): method channelの調査
+// const MethodChannel platform =
+//     MethodChannel('dexterx.dev/flutter_local_notifications_example');
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await _configureLocalTimeZone();
 
   var initializationSettingsAndroid =
       const AndroidInitializationSettings('doroid');
@@ -25,6 +32,14 @@ void main() async {
     debugPrint('notification payload: ' + payload!);
   });
   runApp(ProviderScope(child: MyApp()));
+}
+
+Future<void> _configureLocalTimeZone() async {
+  tz.initializeTimeZones();
+  // TODO(dmb): method channelの調査
+  // final String? timeZoneName =
+  //     await platform.invokeMethod<String>('getTimeZoneName');
+  // tz.setLocalLocation(tz.getLocation(timeZoneName!));
 }
 
 class MyApp extends HookWidget {

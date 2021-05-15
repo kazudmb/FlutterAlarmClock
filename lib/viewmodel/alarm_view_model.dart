@@ -11,6 +11,7 @@ import 'package:light_alarm/main.dart';
 import 'package:light_alarm/view/dialog/alarm_delete_confirm_dialog.dart';
 import 'package:light_alarm/view/dialog/alarm_label_dialog.dart';
 import 'package:light_alarm/view/dialog/alarm_repeat_dialog.dart';
+import 'package:timezone/timezone.dart' as tz;
 
 final alarmViewModelNotifierProvider =
     ChangeNotifierProvider((ref) => AlarmViewModel(
@@ -24,7 +25,6 @@ class AlarmViewModel extends ChangeNotifier {
   final UserRepository _userRepository;
   final AlarmRepository _alarmRepository;
 
-  DateTime _alarmTime = DateTime.now();
   String label = 'アラーム';
   String repeatDayOfTheWeek = 'なし';
 
@@ -48,36 +48,71 @@ class AlarmViewModel extends ChangeNotifier {
         .whenComplete(notifyListeners);
   }
 
-  void scheduleAlarm(DateTime scheduledNotificationDateTime) async {
-    var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
-      'alarm_notif',
-      'alarm_notif',
-      'Channel for Alarm notification',
-      icon: 'doroid',
-      largeIcon: DrawableResourceAndroidBitmap('doroid'),
-    );
+  void scheduleAlarm(tz.TZDateTime scheduledNotificationDateTime) async {
+    var local = tz.local;
+    print(local);
 
-    var iOSPlatformChannelSpecifics = const IOSNotificationDetails(
-        presentAlert: true, presentBadge: true, presentSound: true);
-    var platformChannelSpecifics = NotificationDetails(
-        android: androidPlatformChannelSpecifics,
-        iOS: iOSPlatformChannelSpecifics);
+    var tzTime = tz.TZDateTime(
+      tz.local,
+      scheduledNotificationDateTime.year,
+      scheduledNotificationDateTime.month,
+      scheduledNotificationDateTime.day,
+      scheduledNotificationDateTime.hour,
+      scheduledNotificationDateTime.minute,
+      scheduledNotificationDateTime.second,
+    ).add(const Duration(seconds: 5));
+    print(tzTime);
 
-    // TODO(dmb): deprecated対応
-    await flutterLocalNotificationsPlugin.schedule(0, 'Office', '通知タイトル',
-        scheduledNotificationDateTime, platformChannelSpecifics);
+    var tzNowTime = tz.TZDateTime.now(
+      tz.local,
+    ).add(const Duration(seconds: 5));
+    print(tzNowTime);
+
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+        0,
+        'scheduled title',
+        'scheduled body',
+        tz.TZDateTime(
+          tz.local,
+          scheduledNotificationDateTime.year,
+          scheduledNotificationDateTime.month,
+          scheduledNotificationDateTime.day,
+          scheduledNotificationDateTime.hour,
+          scheduledNotificationDateTime.minute,
+          scheduledNotificationDateTime.second,
+        ).add(const Duration(seconds: 5)),
+        const NotificationDetails(
+          android: AndroidNotificationDetails(
+            'full screen channel id',
+            'full screen channel name',
+            'full screen channel description',
+            icon: 'doroid',
+            largeIcon: DrawableResourceAndroidBitmap('doroid'),
+            priority: Priority.high,
+            importance: Importance.high,
+            fullScreenIntent: true,
+          ),
+          iOS: IOSNotificationDetails(
+            presentAlert: true,
+            presentBadge: true,
+            presentSound: false,
+          ),
+        ),
+        androidAllowWhileIdle: true,
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime);
   }
 
   Future<void> saveAlarm(
-    DateTime alarmTime,
+    tz.TZDateTime alarmTime,
     String? label,
     String repeatDayOfTheWeek,
   ) async {
-    DateTime scheduleAlarmDateTime;
-    if (_alarmTime.isAfter(DateTime.now()))
-      scheduleAlarmDateTime = _alarmTime;
+    tz.TZDateTime scheduleAlarmDateTime;
+    if (alarmTime.isAfter(tz.TZDateTime.now(tz.local)))
+      scheduleAlarmDateTime = alarmTime;
     else
-      scheduleAlarmDateTime = _alarmTime.add(const Duration(days: 1));
+      scheduleAlarmDateTime = alarmTime.add(const Duration(days: 1));
 
     var alarm = Alarm(
       alarmDateTime: scheduleAlarmDateTime,

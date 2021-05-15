@@ -17,7 +17,7 @@ class _AlarmItemState extends State<AlarmItem> {
   @override
   Widget build(BuildContext context) {
     final alarmTime =
-        DateFormat('hh:mm aa').format(widget._alarmInfo.alarmDateTime);
+        DateFormat('HH:mm').format(widget._alarmInfo.alarmDateTime);
 
     return Container(
       margin: const EdgeInsets.only(bottom: 32),
