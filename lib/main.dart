@@ -4,6 +4,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:light_alarm/view/pages/alarm_page.dart';
 import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -36,10 +37,11 @@ void main() async {
 
 Future<void> _configureLocalTimeZone() async {
   tz.initializeTimeZones();
-  // TODO(dmb): method channelの調査
+  // TODO(dmb): MethodChannelを使用して、端末のLocation情報を取得したい
   // final String? timeZoneName =
   //     await platform.invokeMethod<String>('getTimeZoneName');
-  // tz.setLocalLocation(tz.getLocation(timeZoneName!));
+  var japan = getLocation('Asia/Tokyo');
+  setLocalLocation(japan);
 }
 
 class MyApp extends HookWidget {
