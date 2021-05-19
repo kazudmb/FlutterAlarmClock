@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:light_alarm/viewmodel/alarm_view_model.dart';
 import 'package:logger/logger.dart';
-import 'package:timezone/timezone.dart' as tz;
-import 'package:timezone/timezone.dart';
 
 class AlarmHeader extends StatelessWidget with PreferredSizeWidget {
   AlarmHeader(this._alarmViewModel);
@@ -37,7 +35,7 @@ class AlarmHeader extends StatelessWidget with PreferredSizeWidget {
     // 現在時刻
     String _alarmTimeString = DateFormat('HH:mm').format(DateTime.now());
     // アラームの設定時間
-    TZDateTime? _alarmTime;
+    DateTime? _alarmTime;
     // アラームラベル
     String? label = '';
     // 繰り返しフラグ
@@ -81,9 +79,8 @@ class AlarmHeader extends StatelessWidget with PreferredSizeWidget {
                         initialTime: TimeOfDay.now(),
                       );
                       if (selectedTime != null) {
-                        final now = TZDateTime.now(tz.local);
-                        var selectedDateTime = TZDateTime(
-                          tz.local,
+                        final now = DateTime.now();
+                        var selectedDateTime = DateTime(
                           now.year,
                           now.month,
                           now.day,
@@ -139,7 +136,7 @@ class AlarmHeader extends StatelessWidget with PreferredSizeWidget {
                   FloatingActionButton.extended(
                     onPressed: () {
                       _alarmViewModel.saveAlarm(
-                        _alarmTime ?? tz.TZDateTime.now(tz.local),
+                        _alarmTime ?? DateTime.now(),
                         label,
                         repeatDayOfTheWeekString,
                       );

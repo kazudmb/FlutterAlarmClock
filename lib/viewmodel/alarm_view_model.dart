@@ -48,26 +48,7 @@ class AlarmViewModel extends ChangeNotifier {
         .whenComplete(notifyListeners);
   }
 
-  void scheduleAlarm(tz.TZDateTime scheduledNotificationDateTime) async {
-    var local = tz.local;
-    print(local);
-
-    var tzTime = tz.TZDateTime(
-      tz.local,
-      scheduledNotificationDateTime.year,
-      scheduledNotificationDateTime.month,
-      scheduledNotificationDateTime.day,
-      scheduledNotificationDateTime.hour,
-      scheduledNotificationDateTime.minute,
-      scheduledNotificationDateTime.second,
-    ).add(const Duration(seconds: 5));
-    print(tzTime);
-
-    var tzNowTime = tz.TZDateTime.now(
-      tz.local,
-    ).add(const Duration(seconds: 5));
-    print(tzNowTime);
-
+  void scheduleAlarm(DateTime scheduledNotificationDateTime) async {
     await flutterLocalNotificationsPlugin.zonedSchedule(
         0,
         'scheduled title',
@@ -104,12 +85,12 @@ class AlarmViewModel extends ChangeNotifier {
   }
 
   Future<void> saveAlarm(
-    tz.TZDateTime alarmTime,
+    DateTime alarmTime,
     String? label,
     String repeatDayOfTheWeek,
   ) async {
-    tz.TZDateTime scheduleAlarmDateTime;
-    if (alarmTime.isAfter(tz.TZDateTime.now(tz.local)))
+    DateTime scheduleAlarmDateTime;
+    if (alarmTime.isAfter(DateTime.now()))
       scheduleAlarmDateTime = alarmTime;
     else
       scheduleAlarmDateTime = alarmTime.add(const Duration(days: 1));
