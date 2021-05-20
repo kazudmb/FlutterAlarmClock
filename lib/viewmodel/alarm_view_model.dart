@@ -61,7 +61,7 @@ class AlarmViewModel extends ChangeNotifier {
           scheduledNotificationDateTime.hour,
           scheduledNotificationDateTime.minute,
           scheduledNotificationDateTime.second,
-        ).add(const Duration(seconds: 5)),
+        ),
         const NotificationDetails(
           android: AndroidNotificationDetails(
             'full screen channel id',
