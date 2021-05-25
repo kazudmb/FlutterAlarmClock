@@ -13,9 +13,11 @@ class _Footer extends State {
     return BottomNavigationBar(
       items: const [
         BottomNavigationBarItem(
+          label: 'alarm',
           icon: Icon(Icons.alarm),
         ),
         BottomNavigationBarItem(
+          label: 'timer',
           icon: Icon(Icons.timer),
         ),
       ],

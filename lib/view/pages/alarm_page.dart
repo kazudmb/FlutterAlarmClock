@@ -81,7 +81,7 @@ class _AlarmPageState extends State<AlarmPage> {
         ),
       ),
       // TODO(dmb): タイマーを実装する段階で追加すること
-      // bottomNavigationBar: const Footer(),
+      // bottomNavigationBar: const AlarmFooter(),
     );
   }
 }

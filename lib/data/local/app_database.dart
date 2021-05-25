@@ -11,9 +11,14 @@ class AppDatabase {
   final String tableAlarm = 'alarm';
   final String columnAlarmId = 'alarmId';
   final String columnTitle = 'title';
-  final String columnDateTime = 'alarmDateTime';
+  final String columnAlarmDateTime = 'alarmDateTime';
   final String columnPending = 'isPending';
   final String columnRepeat = 'repeat';
+
+  /// Timer
+  final String tableTimer = 'timer';
+  final String columnTimerId = 'timerId';
+  final String columnTimerDateTime = 'timerDateTime';
 
   Database? _database;
 
@@ -32,7 +37,7 @@ class AppDatabase {
 
   Future<Database> _initializeDatabase() async {
     var dir = await getDatabasesPath();
-    var path = dir + "alarm.db";
+    var path = dir + "light_alarm.db";
 
     var database = await openDatabase(
       path,
@@ -47,9 +52,15 @@ class AppDatabase {
           $columnUserId integer,
           $columnAlarmId integer primary key autoincrement, 
           $columnTitle text not null,
-          $columnDateTime text not null,
+          $columnAlarmDateTime text not null,
           $columnPending integer not null,
           $columnRepeat text not null)
+        ''');
+        db.execute('''
+          create table $tableTimer ( 
+          $columnUserId integer,
+          $columnTimerId integer primary key autoincrement, 
+          $columnTimerDateTime text not null)
         ''');
       },
     );
