@@ -7,7 +7,7 @@ part 'timer.g.dart';
 abstract class Timer with _$Timer {
   const factory Timer({
     int? timerId,
-    required DateTime alarmDateTime,
+    required DateTime timerDateTime,
   }) = _Timer;
 
   factory Timer.fromJson(Map<String, dynamic> json) => _$TimerFromJson(json);

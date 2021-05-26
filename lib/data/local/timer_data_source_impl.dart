@@ -28,10 +28,9 @@ class TimerDataSourceImpl extends TimerDataSource {
   }
 
   @override
-  Future<int?> deleteTimer(int id) async {
+  Future<int?> deleteTimer() async {
     var db = await _database.getDatabase();
-    var result = await db
-        .delete(_database.tableTimer, where: 'timerId = ?', whereArgs: [id]);
+    var result = await db.delete(_database.tableTimer);
     logger.d('count: $result');
     return result;
   }

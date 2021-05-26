@@ -19,7 +19,7 @@ class TimerRepositoryImpl implements TimerRepository {
   }
 
   @override
-  Future<int?> deleteTimer(int id) {
-    return _timerDataSource.deleteTimer(id);
+  Future<int?> deleteTimer() {
+    return _timerDataSource.deleteTimer();
   }
 }

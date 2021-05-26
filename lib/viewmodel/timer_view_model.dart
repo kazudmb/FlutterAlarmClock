@@ -8,9 +8,6 @@ import 'package:light_alarm/data/provider/user_repository_provider.dart';
 import 'package:light_alarm/data/repository/timer_repository.dart';
 import 'package:light_alarm/data/repository/user_repository.dart';
 import 'package:light_alarm/main.dart';
-import 'package:light_alarm/view/dialog/alarm_delete_confirm_dialog.dart';
-import 'package:light_alarm/view/dialog/alarm_label_dialog.dart';
-import 'package:light_alarm/view/dialog/alarm_repeat_dialog.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 final timerViewModelNotifierProvider =
@@ -33,6 +30,9 @@ class TimerViewModel extends ChangeNotifier {
 
   Timer? _timer;
   Timer? get timer => _timer;
+
+  Duration countDownTime = const Duration(seconds: 0);
+  DateTime countDownDateTime = DateTime.utc(0, 0, 0);
 
   Future<void> fetchUser() {
     return _userRepository
@@ -92,80 +92,43 @@ class TimerViewModel extends ChangeNotifier {
     else
       scheduleTimerDateTime = dateTime.add(const Duration(days: 1));
 
-    var timer = Timer(alarmDateTime: scheduleTimerDateTime);
+    var timer = Timer(timerDateTime: scheduleTimerDateTime);
     await _timerRepository.insertTimer(timer).whenComplete(notifyListeners);
     scheduleAlarm(scheduleTimerDateTime);
-    // TODO(dmb): 画面遷移の処理を更新すること
-    // Navigator.pop(context);
     fetchTimer();
   }
 
-  Future<void> deleteTimer(int id) async {
-    await _timerRepository.deleteTimer(id).whenComplete(notifyListeners);
+  Future<void> deleteTimer() async {
+    await _timerRepository.deleteTimer().whenComplete(notifyListeners);
     fetchTimer();
   }
 
-  /// Dialog表示(Alarm label)
-  Future<String?> showAlarmLabelDialog({
-    required BuildContext context,
-    required String label,
-    bool useRootNavigator = true,
-  }) {
-    final Widget dialog = AlarmLabelDialog(label);
-    return showDialog(
-      context: context,
-      useRootNavigator: useRootNavigator,
-      builder: (BuildContext context) {
-        return dialog;
-      },
-    );
-  }
+  Future<void> setCountDownDateTime(Duration countDownTime) async {
+    DateTime currentTime = DateTime.now();
+    int hours = 0;
+    int minutes = 0;
+    int seconds = 0;
 
-  /// Dialog表示(Alarm Repeat)
-  Future<List<bool>?> showAlarmRepeatDialog({
-    required BuildContext context,
-    required List<bool>? repeatDayOfTheWeekCheckbox,
-    bool useRootNavigator = true,
-  }) {
-    final Widget dialog = AlarmRepeatDialog(repeatDayOfTheWeekCheckbox);
-    return showDialog(
-      context: context,
-      useRootNavigator: useRootNavigator,
-      builder: (BuildContext context) {
-        return dialog;
-      },
-    );
-  }
-
-  /// Dialog表示(Alarm Delete)
-  Future<bool?> showAlarmDeleteConfirmDialog({
-    required BuildContext context,
-    bool useRootNavigator = true,
-  }) {
-    final Widget dialog = AlarmDeleteConfirmDialog();
-    return showDialog(
-      context: context,
-      useRootNavigator: useRootNavigator,
-      builder: (BuildContext context) {
-        return dialog;
-      },
-    );
-  }
-
-  /// 繰り返し情報の取得
-  String getRepeatDayOfTheWeek(List<bool>? checkboxState) {
-    String repeatDayOfTheWeek = '';
-    List<String> dayOfTheWeek = ['月 ', '火 ', '水 ', '木 ', '金 ', '土 ', '日 '];
-    if (checkboxState != null) {
-      for (int i = 0; i < checkboxState.length; i++) {
-        if (checkboxState[i]) {
-          repeatDayOfTheWeek = repeatDayOfTheWeek + dayOfTheWeek[i];
-        }
-      }
+    hours = countDownTime.inHours;
+    if (countDownTime.inMinutes <= 60) {
+      minutes = 0;
+    } else {
+      minutes = countDownTime.inMinutes;
     }
-    if (repeatDayOfTheWeek.isEmpty) {
-      repeatDayOfTheWeek = 'なし';
+    if (countDownTime.inSeconds <= 60) {
+      seconds = 0;
+    } else {
+      seconds = countDownTime.inSeconds;
     }
-    return repeatDayOfTheWeek;
+
+    // TODO(dmb): タイムゾーンの影響？で時間のみがズレる
+    countDownDateTime = DateTime(
+      currentTime.year,
+      currentTime.month,
+      currentTime.day,
+      hours,
+      minutes,
+      seconds,
+    );
   }
 }

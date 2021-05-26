@@ -59,7 +59,7 @@ class AppDatabase {
         db.execute('''
           create table $tableTimer ( 
           $columnUserId integer,
-          $columnTimerId integer primary key autoincrement, 
+          $columnTimerId integer primary key, 
           $columnTimerDateTime text not null)
         ''');
       },

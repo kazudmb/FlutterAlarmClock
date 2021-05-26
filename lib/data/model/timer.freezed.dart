@@ -20,10 +20,10 @@ Timer _$TimerFromJson(Map<String, dynamic> json) {
 class _$TimerTearOff {
   const _$TimerTearOff();
 
-  _Timer call({int? timerId, required DateTime alarmDateTime}) {
+  _Timer call({int? timerId, required DateTime timerDateTime}) {
     return _Timer(
       timerId: timerId,
-      alarmDateTime: alarmDateTime,
+      timerDateTime: timerDateTime,
     );
   }
 
@@ -38,7 +38,7 @@ const $Timer = _$TimerTearOff();
 /// @nodoc
 mixin _$Timer {
   int? get timerId => throw _privateConstructorUsedError;
-  DateTime get alarmDateTime => throw _privateConstructorUsedError;
+  DateTime get timerDateTime => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -49,7 +49,7 @@ mixin _$Timer {
 abstract class $TimerCopyWith<$Res> {
   factory $TimerCopyWith(Timer value, $Res Function(Timer) then) =
       _$TimerCopyWithImpl<$Res>;
-  $Res call({int? timerId, DateTime alarmDateTime});
+  $Res call({int? timerId, DateTime timerDateTime});
 }
 
 /// @nodoc
@@ -63,16 +63,16 @@ class _$TimerCopyWithImpl<$Res> implements $TimerCopyWith<$Res> {
   @override
   $Res call({
     Object? timerId = freezed,
-    Object? alarmDateTime = freezed,
+    Object? timerDateTime = freezed,
   }) {
     return _then(_value.copyWith(
       timerId: timerId == freezed
           ? _value.timerId
           : timerId // ignore: cast_nullable_to_non_nullable
               as int?,
-      alarmDateTime: alarmDateTime == freezed
-          ? _value.alarmDateTime
-          : alarmDateTime // ignore: cast_nullable_to_non_nullable
+      timerDateTime: timerDateTime == freezed
+          ? _value.timerDateTime
+          : timerDateTime // ignore: cast_nullable_to_non_nullable
               as DateTime,
     ));
   }
@@ -83,7 +83,7 @@ abstract class _$TimerCopyWith<$Res> implements $TimerCopyWith<$Res> {
   factory _$TimerCopyWith(_Timer value, $Res Function(_Timer) then) =
       __$TimerCopyWithImpl<$Res>;
   @override
-  $Res call({int? timerId, DateTime alarmDateTime});
+  $Res call({int? timerId, DateTime timerDateTime});
 }
 
 /// @nodoc
@@ -98,16 +98,16 @@ class __$TimerCopyWithImpl<$Res> extends _$TimerCopyWithImpl<$Res>
   @override
   $Res call({
     Object? timerId = freezed,
-    Object? alarmDateTime = freezed,
+    Object? timerDateTime = freezed,
   }) {
     return _then(_Timer(
       timerId: timerId == freezed
           ? _value.timerId
           : timerId // ignore: cast_nullable_to_non_nullable
               as int?,
-      alarmDateTime: alarmDateTime == freezed
-          ? _value.alarmDateTime
-          : alarmDateTime // ignore: cast_nullable_to_non_nullable
+      timerDateTime: timerDateTime == freezed
+          ? _value.timerDateTime
+          : timerDateTime // ignore: cast_nullable_to_non_nullable
               as DateTime,
     ));
   }
@@ -117,7 +117,7 @@ class __$TimerCopyWithImpl<$Res> extends _$TimerCopyWithImpl<$Res>
 
 /// @nodoc
 class _$_Timer implements _Timer {
-  const _$_Timer({this.timerId, required this.alarmDateTime});
+  const _$_Timer({this.timerId, required this.timerDateTime});
 
   factory _$_Timer.fromJson(Map<String, dynamic> json) =>
       _$_$_TimerFromJson(json);
@@ -125,11 +125,11 @@ class _$_Timer implements _Timer {
   @override
   final int? timerId;
   @override
-  final DateTime alarmDateTime;
+  final DateTime timerDateTime;
 
   @override
   String toString() {
-    return 'Timer(timerId: $timerId, alarmDateTime: $alarmDateTime)';
+    return 'Timer(timerId: $timerId, timerDateTime: $timerDateTime)';
   }
 
   @override
@@ -139,16 +139,16 @@ class _$_Timer implements _Timer {
             (identical(other.timerId, timerId) ||
                 const DeepCollectionEquality()
                     .equals(other.timerId, timerId)) &&
-            (identical(other.alarmDateTime, alarmDateTime) ||
+            (identical(other.timerDateTime, timerDateTime) ||
                 const DeepCollectionEquality()
-                    .equals(other.alarmDateTime, alarmDateTime)));
+                    .equals(other.timerDateTime, timerDateTime)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(timerId) ^
-      const DeepCollectionEquality().hash(alarmDateTime);
+      const DeepCollectionEquality().hash(timerDateTime);
 
   @JsonKey(ignore: true)
   @override
@@ -162,7 +162,7 @@ class _$_Timer implements _Timer {
 }
 
 abstract class _Timer implements Timer {
-  const factory _Timer({int? timerId, required DateTime alarmDateTime}) =
+  const factory _Timer({int? timerId, required DateTime timerDateTime}) =
       _$_Timer;
 
   factory _Timer.fromJson(Map<String, dynamic> json) = _$_Timer.fromJson;
@@ -170,7 +170,7 @@ abstract class _Timer implements Timer {
   @override
   int? get timerId => throw _privateConstructorUsedError;
   @override
-  DateTime get alarmDateTime => throw _privateConstructorUsedError;
+  DateTime get timerDateTime => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$TimerCopyWith<_Timer> get copyWith => throw _privateConstructorUsedError;
