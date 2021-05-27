@@ -55,8 +55,8 @@ class _TimerPageState extends State<TimerPage> {
                   child: const Text('キャンセル'),
                   onPressed: () {
                     print('onPressed');
+                    timerViewModel.cancelTimer();
                     timerViewModel.deleteTimer();
-                    // TODO(dmb): 通知もキャンセルさせること
                   },
                 ),
                 HookBuilder(

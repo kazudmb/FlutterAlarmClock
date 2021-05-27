@@ -48,7 +48,7 @@ class TimerViewModel extends ChangeNotifier {
         .whenComplete(notifyListeners);
   }
 
-  void scheduleAlarm(DateTime scheduledNotificationDateTime) async {
+  void scheduleTimer(DateTime scheduledNotificationDateTime) async {
     await flutterLocalNotificationsPlugin.zonedSchedule(
         0,
         'scheduled title',
@@ -84,6 +84,12 @@ class TimerViewModel extends ChangeNotifier {
             UILocalNotificationDateInterpretation.absoluteTime);
   }
 
+  Future<void> cancelTimer() async {
+    // TODO(dmb): キャンセルの動作確認すること
+    // TODO(dmb): Timerのidは、1を固定値として持つこと
+    await flutterLocalNotificationsPlugin.cancel(1);
+  }
+
   Future<void> saveTimer(DateTime dateTime) async {
     // TODO(dmb): タイマー用のロジックを実装すること
     DateTime scheduleTimerDateTime;
@@ -94,7 +100,7 @@ class TimerViewModel extends ChangeNotifier {
 
     var timer = Timer(timerDateTime: scheduleTimerDateTime);
     await _timerRepository.insertTimer(timer).whenComplete(notifyListeners);
-    scheduleAlarm(scheduleTimerDateTime);
+    scheduleTimer(scheduleTimerDateTime);
     fetchTimer();
   }
 
