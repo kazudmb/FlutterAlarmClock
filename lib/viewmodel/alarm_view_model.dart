@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:light_alarm/constants/constant.dart';
 import 'package:light_alarm/data/model/alarm.dart';
 import 'package:light_alarm/data/model/user.dart';
 import 'package:light_alarm/data/provider/alarm_repository_provider.dart';
@@ -50,7 +51,7 @@ class AlarmViewModel extends ChangeNotifier {
 
   void scheduleAlarm(DateTime scheduledNotificationDateTime) async {
     await flutterLocalNotificationsPlugin.zonedSchedule(
-        0,
+        Constant.notificationAlarmId,
         'scheduled title',
         'scheduled body',
         tz.TZDateTime(

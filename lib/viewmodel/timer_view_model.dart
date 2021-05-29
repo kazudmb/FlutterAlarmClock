@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:light_alarm/constants/constant.dart';
 import 'package:light_alarm/data/model/timer.dart';
 import 'package:light_alarm/data/model/user.dart';
 import 'package:light_alarm/data/provider/timer_repository_provider.dart';
@@ -34,6 +35,8 @@ class TimerViewModel extends ChangeNotifier {
   Duration countDownTime = const Duration(seconds: 0);
   DateTime countDownDateTime = DateTime.utc(0, 0, 0);
 
+  bool isPauseTimer = false;
+
   Future<void> fetchUser() {
     return _userRepository
         .fetchUser()
@@ -50,7 +53,7 @@ class TimerViewModel extends ChangeNotifier {
 
   void scheduleTimer(DateTime scheduledNotificationDateTime) async {
     await flutterLocalNotificationsPlugin.zonedSchedule(
-        0,
+        Constant.notificationTimerId,
         'scheduled title',
         'scheduled body',
         tz.TZDateTime(
@@ -85,9 +88,7 @@ class TimerViewModel extends ChangeNotifier {
   }
 
   Future<void> cancelTimer() async {
-    // TODO(dmb): キャンセルの動作確認すること
-    // TODO(dmb): Timerのidは、1を固定値として持つこと
-    await flutterLocalNotificationsPlugin.cancel(1);
+    await flutterLocalNotificationsPlugin.cancel(Constant.notificationTimerId);
   }
 
   Future<void> saveTimer(DateTime dateTime) async {
@@ -105,6 +106,7 @@ class TimerViewModel extends ChangeNotifier {
   }
 
   Future<void> deleteTimer() async {
+    cancelTimer();
     await _timerRepository.deleteTimer().whenComplete(notifyListeners);
     fetchTimer();
   }
@@ -136,5 +138,12 @@ class TimerViewModel extends ChangeNotifier {
       minutes,
       seconds,
     );
+  }
+
+  void updatePauseStatus(bool isPauseTimer) {
+    this.isPauseTimer = isPauseTimer;
+    print('this.isPauseTimer: ' + this.isPauseTimer.toString());
+    print('isPauseTimer: ' + isPauseTimer.toString());
+    notifyListeners();
   }
 }

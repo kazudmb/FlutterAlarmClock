@@ -55,7 +55,6 @@ class _TimerPageState extends State<TimerPage> {
                   child: const Text('キャンセル'),
                   onPressed: () {
                     print('onPressed');
-                    timerViewModel.cancelTimer();
                     timerViewModel.deleteTimer();
                   },
                 ),
@@ -75,13 +74,25 @@ class _TimerPageState extends State<TimerPage> {
                       );
                     } else {
                       // TODO(dmb): 一時停止・再開の切り替えを実装すること
-                      return TextButton(
-                        child: const Text('一時停止'),
-                        onPressed: () {
-                          print('onPressed');
-                          // TODO(dmb): 一時停止処理を追加すること
-                        },
-                      );
+                      if (timerViewModel.isPauseTimer) {
+                        return TextButton(
+                          child: const Text('再開'),
+                          onPressed: () {
+                            print('onPressed: 再開');
+                            timerViewModel.updatePauseStatus(false);
+                            // TODO(dmb): 再開処理を追加すること
+                          },
+                        );
+                      } else {
+                        return TextButton(
+                          child: const Text('一時停止'),
+                          onPressed: () {
+                            print('onPressed: 一時停止');
+                            timerViewModel.updatePauseStatus(true);
+                            // TODO(dmb): 一時停止処理を追加すること
+                          },
+                        );
+                      }
                     }
                   },
                 ),
