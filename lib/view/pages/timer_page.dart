@@ -6,21 +6,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:light_alarm/constants/theme_dart.dart';
 import 'package:light_alarm/viewmodel/timer_view_model.dart';
-import 'package:logger/logger.dart';
 
-final counterProvider = StateProvider((ref) => 0);
-
-class TimerPage extends StatefulWidget {
-  @override
-  _TimerPageState createState() => _TimerPageState();
-}
-
-class _TimerPageState extends State<TimerPage> {
-  var logger = Logger();
-
+class TimerPage extends HookWidget {
   @override
   Widget build(BuildContext context) {
-    final timerViewModel = context.read(timerViewModelNotifierProvider);
+    final timerViewModel = useProvider(timerViewModelNotifierProvider);
     return Scaffold(
       backgroundColor: CustomColors.pageBackgroundColor,
       body: Container(
@@ -66,14 +56,14 @@ class _TimerPageState extends State<TimerPage> {
                       return TextButton(
                         child: const Text('スタート'),
                         onPressed: () {
-                          timerViewModel.setCountDownDateTime(
-                              timerViewModel.countDownTime);
+                          DateTime currentTime = DateTime.now();
+                          timerViewModel.setCountDownDateTime(currentTime,
+                              currentTime.add(timerViewModel.countDownTime));
                           timerViewModel.saveTimer(
-                              DateTime.now().add(timerViewModel.countDownTime));
+                              currentTime.add(timerViewModel.countDownTime));
                         },
                       );
                     } else {
-                      // TODO(dmb): 一時停止・再開の切り替えを実装すること
                       if (timerViewModel.isPauseTimer) {
                         return TextButton(
                           child: const Text('再開'),

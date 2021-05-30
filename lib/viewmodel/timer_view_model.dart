@@ -91,14 +91,7 @@ class TimerViewModel extends ChangeNotifier {
     await flutterLocalNotificationsPlugin.cancel(Constant.notificationTimerId);
   }
 
-  Future<void> saveTimer(DateTime dateTime) async {
-    // TODO(dmb): タイマー用のロジックを実装すること
-    DateTime scheduleTimerDateTime;
-    if (dateTime.isAfter(DateTime.now()))
-      scheduleTimerDateTime = dateTime;
-    else
-      scheduleTimerDateTime = dateTime.add(const Duration(days: 1));
-
+  Future<void> saveTimer(DateTime scheduleTimerDateTime) async {
     var timer = Timer(timerDateTime: scheduleTimerDateTime);
     await _timerRepository.insertTimer(timer).whenComplete(notifyListeners);
     scheduleTimer(scheduleTimerDateTime);
@@ -111,39 +104,22 @@ class TimerViewModel extends ChangeNotifier {
     fetchTimer();
   }
 
-  Future<void> setCountDownDateTime(Duration countDownTime) async {
-    DateTime currentTime = DateTime.now();
-    int hours = 0;
-    int minutes = 0;
-    int seconds = 0;
-
-    hours = countDownTime.inHours;
-    if (countDownTime.inMinutes <= 60) {
-      minutes = 0;
-    } else {
-      minutes = countDownTime.inMinutes;
-    }
-    if (countDownTime.inSeconds <= 60) {
-      seconds = 0;
-    } else {
-      seconds = countDownTime.inSeconds;
-    }
-
-    // TODO(dmb): タイムゾーンの影響？で時間のみがズレる
+  Future<void> setCountDownDateTime(
+    DateTime currentTime,
+    DateTime notificationTime,
+  ) async {
     countDownDateTime = DateTime(
-      currentTime.year,
-      currentTime.month,
-      currentTime.day,
-      hours,
-      minutes,
-      seconds,
+      notificationTime.year,
+      notificationTime.month,
+      notificationTime.day,
+      notificationTime.hour - currentTime.hour,
+      notificationTime.minute - currentTime.minute,
+      notificationTime.second - currentTime.second,
     );
   }
 
   void updatePauseStatus(bool isPauseTimer) {
     this.isPauseTimer = isPauseTimer;
-    print('this.isPauseTimer: ' + this.isPauseTimer.toString());
-    print('isPauseTimer: ' + isPauseTimer.toString());
     notifyListeners();
   }
 }

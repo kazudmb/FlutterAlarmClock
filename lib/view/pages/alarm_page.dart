@@ -9,18 +9,8 @@ import 'package:light_alarm/view/molecules/alarm_header.dart';
 import 'package:light_alarm/view/molecules/alarm_item.dart';
 import 'package:light_alarm/viewmodel/alarm_view_model.dart';
 import 'package:light_alarm/viewmodel/loading_state_view_model.dart';
-import 'package:logger/logger.dart';
 
-final counterProvider = StateProvider((ref) => 0);
-
-class AlarmPage extends StatefulWidget {
-  @override
-  _AlarmPageState createState() => _AlarmPageState();
-}
-
-class _AlarmPageState extends State<AlarmPage> {
-  var logger = Logger();
-
+class AlarmPage extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final alarmViewModel = context.read(alarmViewModelNotifierProvider);
