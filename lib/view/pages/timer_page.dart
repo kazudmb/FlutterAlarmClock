@@ -31,7 +31,6 @@ class TimerPage extends HookWidget {
                       }),
                 );
               } else {
-                // TODO(dmb): カウントダウンロジックの実装
                 return Text(
                   DateFormat.Hms().format(timerViewModel.countDownDateTime),
                   style: Theme.of(context).textTheme.headline2,
@@ -44,7 +43,6 @@ class TimerPage extends HookWidget {
                 TextButton(
                   child: const Text('キャンセル'),
                   onPressed: () {
-                    print('onPressed');
                     timerViewModel.deleteTimer();
                   },
                 ),
@@ -57,9 +55,7 @@ class TimerPage extends HookWidget {
                         child: const Text('スタート'),
                         onPressed: () {
                           DateTime currentTime = DateTime.now();
-                          timerViewModel.setCountDownDateTime(currentTime,
-                              currentTime.add(timerViewModel.countDownTime));
-                          timerViewModel.saveTimer(
+                          timerViewModel.startCountDown(currentTime,
                               currentTime.add(timerViewModel.countDownTime));
                         },
                       );

@@ -1,3 +1,5 @@
+import 'dart:async' as async;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -87,7 +89,7 @@ class TimerViewModel extends ChangeNotifier {
             UILocalNotificationDateInterpretation.absoluteTime);
   }
 
-  Future<void> cancelTimer() async {
+  Future<void> cancelScheduleTimer() async {
     await flutterLocalNotificationsPlugin.cancel(Constant.notificationTimerId);
   }
 
@@ -99,12 +101,12 @@ class TimerViewModel extends ChangeNotifier {
   }
 
   Future<void> deleteTimer() async {
-    cancelTimer();
+    cancelScheduleTimer();
     await _timerRepository.deleteTimer().whenComplete(notifyListeners);
     fetchTimer();
   }
 
-  Future<void> setCountDownDateTime(
+  Future<void> startCountDown(
     DateTime currentTime,
     DateTime notificationTime,
   ) async {
@@ -116,10 +118,36 @@ class TimerViewModel extends ChangeNotifier {
       notificationTime.minute - currentTime.minute,
       notificationTime.second - currentTime.second,
     );
+
+    if (!(countDownDateTime.hour == 0 &&
+        countDownDateTime.minute == 0 &&
+        countDownDateTime.second == 0)) {
+      saveTimer(notificationTime);
+      async.Timer.periodic(
+        const Duration(seconds: 1),
+        _decrementDownDateTime,
+      );
+    }
+  }
+
+  void _decrementDownDateTime(async.Timer timer) {
+    countDownDateTime = countDownDateTime.subtract(const Duration(seconds: 1));
+    if (countDownDateTime.hour == 0 &&
+        countDownDateTime.minute == 0 &&
+        countDownDateTime.second == 0) {
+      timer.cancel();
+      deleteTimer();
+    }
+    notifyListeners();
   }
 
   void updatePauseStatus(bool isPauseTimer) {
     this.isPauseTimer = isPauseTimer;
+    if (this.isPauseTimer) {
+      // TODO(dmb): 残り時間を退避、notificationの設定を削除、でもデジタル時計のviewは更新させない
+    } else {
+      // TODO(dmb): 退避していた残り時間を再度セット、でもデジタル時計のviewは更新させない
+    }
     notifyListeners();
   }
 }
