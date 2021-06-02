@@ -44,6 +44,7 @@ class TimerPage extends HookWidget {
                   child: const Text('キャンセル'),
                   onPressed: () {
                     timerViewModel.deleteTimer();
+                    timerViewModel.fetchTimer();
                   },
                 ),
                 HookBuilder(
@@ -56,7 +57,8 @@ class TimerPage extends HookWidget {
                         onPressed: () {
                           DateTime currentTime = DateTime.now();
                           timerViewModel.startCountDown(currentTime,
-                              currentTime.add(timerViewModel.countDownTime));
+                              notificationTime: currentTime
+                                  .add(timerViewModel.countDownTime));
                         },
                       );
                     } else {
@@ -64,18 +66,14 @@ class TimerPage extends HookWidget {
                         return TextButton(
                           child: const Text('再開'),
                           onPressed: () {
-                            print('onPressed: 再開');
                             timerViewModel.updatePauseStatus(false);
-                            // TODO(dmb): 再開処理を追加すること
                           },
                         );
                       } else {
                         return TextButton(
                           child: const Text('一時停止'),
                           onPressed: () {
-                            print('onPressed: 一時停止');
                             timerViewModel.updatePauseStatus(true);
-                            // TODO(dmb): 一時停止処理を追加すること
                           },
                         );
                       }

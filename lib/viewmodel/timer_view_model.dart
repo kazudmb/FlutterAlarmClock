@@ -25,9 +25,6 @@ class TimerViewModel extends ChangeNotifier {
   final UserRepository _userRepository;
   final TimerRepository _timerRepository;
 
-  String label = 'アラーム';
-  String repeatDayOfTheWeek = 'なし';
-
   User? _user;
   User? get user => _user;
 
@@ -36,7 +33,6 @@ class TimerViewModel extends ChangeNotifier {
 
   Duration countDownTime = const Duration(seconds: 0);
   DateTime countDownDateTime = DateTime.utc(0, 0, 0);
-
   bool isPauseTimer = false;
 
   Future<void> fetchUser() {
@@ -53,6 +49,17 @@ class TimerViewModel extends ChangeNotifier {
         .whenComplete(notifyListeners);
   }
 
+  Future<void> saveTimer(DateTime scheduleTimerDateTime) async {
+    var timer = Timer(timerDateTime: scheduleTimerDateTime);
+    await _timerRepository.insertTimer(timer).whenComplete(notifyListeners);
+    scheduleTimer(scheduleTimerDateTime);
+  }
+
+  Future<void> deleteTimer() async {
+    cancelScheduleTimer();
+    await _timerRepository.deleteTimer().whenComplete(notifyListeners);
+  }
+
   void scheduleTimer(DateTime scheduledNotificationDateTime) async {
     await flutterLocalNotificationsPlugin.zonedSchedule(
         Constant.notificationTimerId,
@@ -66,6 +73,7 @@ class TimerViewModel extends ChangeNotifier {
           scheduledNotificationDateTime.hour,
           scheduledNotificationDateTime.minute,
           scheduledNotificationDateTime.second,
+          scheduledNotificationDateTime.millisecond,
         ),
         const NotificationDetails(
           android: AndroidNotificationDetails(
@@ -93,23 +101,15 @@ class TimerViewModel extends ChangeNotifier {
     await flutterLocalNotificationsPlugin.cancel(Constant.notificationTimerId);
   }
 
-  Future<void> saveTimer(DateTime scheduleTimerDateTime) async {
-    var timer = Timer(timerDateTime: scheduleTimerDateTime);
-    await _timerRepository.insertTimer(timer).whenComplete(notifyListeners);
-    scheduleTimer(scheduleTimerDateTime);
-    fetchTimer();
-  }
-
-  Future<void> deleteTimer() async {
-    cancelScheduleTimer();
-    await _timerRepository.deleteTimer().whenComplete(notifyListeners);
-    fetchTimer();
-  }
-
   Future<void> startCountDown(
-    DateTime currentTime,
-    DateTime notificationTime,
-  ) async {
+    DateTime currentTime, {
+    DateTime? notificationTime,
+  }) async {
+    this.isPauseTimer = false;
+    if (notificationTime == null) {
+      notificationTime = currentTime.add(countDownTime);
+    }
+
     countDownDateTime = DateTime(
       notificationTime.year,
       notificationTime.month,
@@ -117,12 +117,15 @@ class TimerViewModel extends ChangeNotifier {
       notificationTime.hour - currentTime.hour,
       notificationTime.minute - currentTime.minute,
       notificationTime.second - currentTime.second,
+      notificationTime.millisecond - currentTime.millisecond,
     );
 
     if (!(countDownDateTime.hour == 0 &&
         countDownDateTime.minute == 0 &&
-        countDownDateTime.second == 0)) {
+        countDownDateTime.second == 0 &&
+        countDownDateTime.millisecond == 0)) {
       saveTimer(notificationTime);
+      fetchTimer();
       async.Timer.periodic(
         const Duration(seconds: 1),
         _decrementDownDateTime,
@@ -134,19 +137,30 @@ class TimerViewModel extends ChangeNotifier {
     countDownDateTime = countDownDateTime.subtract(const Duration(seconds: 1));
     if (countDownDateTime.hour == 0 &&
         countDownDateTime.minute == 0 &&
-        countDownDateTime.second == 0) {
+        countDownDateTime.second == 0 &&
+        countDownDateTime.millisecond == 0) {
+      timer.cancel();
+      deleteTimer();
+      fetchTimer();
+    } else {
+      notifyListeners();
+    }
+
+    if (this.isPauseTimer) {
+      countDownTime = Duration(
+          milliseconds: countDownDateTime.millisecond,
+          seconds: countDownDateTime.second,
+          minutes: countDownDateTime.minute,
+          hours: countDownDateTime.hour);
       timer.cancel();
       deleteTimer();
     }
-    notifyListeners();
   }
 
   void updatePauseStatus(bool isPauseTimer) {
     this.isPauseTimer = isPauseTimer;
-    if (this.isPauseTimer) {
-      // TODO(dmb): 残り時間を退避、notificationの設定を削除、でもデジタル時計のviewは更新させない
-    } else {
-      // TODO(dmb): 退避していた残り時間を再度セット、でもデジタル時計のviewは更新させない
+    if (!this.isPauseTimer) {
+      startCountDown(DateTime.now());
     }
     notifyListeners();
   }
