@@ -62,6 +62,8 @@ dependencies:
 
   timezone: ^0.7.0
 
+  google_mobile_ads: ^0.13.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
