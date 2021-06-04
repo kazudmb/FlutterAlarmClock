@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:light_alarm/view/molecules/admob.dart';
 import 'package:light_alarm/view/pages/timer_page.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart';
@@ -59,7 +60,13 @@ class MyApp extends HookWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: TimerPage(),
+      home: Stack(
+        alignment: AlignmentDirectional.bottomCenter,
+        children: <Widget>[
+          TimerPage(),
+          AdMobPage(),
+        ],
+      ),
     );
   }
 }
