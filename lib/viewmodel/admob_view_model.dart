@@ -8,11 +8,6 @@ final adMobViewModelNotifierProvider =
     ChangeNotifierProvider((ref) => AdMobViewModel());
 
 class AdMobViewModel extends ChangeNotifier {
-  static final AdRequest request = const AdRequest(
-    keywords: <String>['foo', 'bar'],
-    contentUrl: 'http://foo.com/bar.html',
-    nonPersonalizedAds: true,
-  );
   BannerAd? anchoredBanner;
   bool loadingAnchoredBanner = false;
 
@@ -30,7 +25,7 @@ class AdMobViewModel extends ChangeNotifier {
 
     final BannerAd banner = BannerAd(
       size: size,
-      request: request,
+      request: const AdRequest(),
       adUnitId: Platform.isAndroid
           ? 'ca-app-pub-3944557252479495/3303566322'
           : 'ca-app-pub-3944557252479495/7625954710',
