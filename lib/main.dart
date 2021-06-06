@@ -11,10 +11,6 @@ import 'package:timezone/timezone.dart';
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 
-// TODO(dmb): method channelの調査
-// const MethodChannel platform =
-//     MethodChannel('dexterx.dev/flutter_local_notifications_example');
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 

@@ -1,6 +1,7 @@
 import 'dart:async' as async;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:light_alarm/constants/constant.dart';
@@ -34,6 +35,9 @@ class TimerViewModel extends ChangeNotifier {
   Duration countDownTime = const Duration(seconds: 0);
   DateTime countDownDateTime = DateTime.utc(0, 0, 0);
   bool isPauseTimer = false;
+
+  static const methodChannel = MethodChannel('com.dmb/light_alarm');
+  bool _isFlashLightOn = false;
 
   Future<void> fetchUser() {
     return _userRepository
@@ -139,6 +143,7 @@ class TimerViewModel extends ChangeNotifier {
         countDownDateTime.minute == 0 &&
         countDownDateTime.second == 0 &&
         countDownDateTime.millisecond == 0) {
+      _setTorchMode();
       timer.cancel();
       deleteTimer();
       fetchTimer();
@@ -163,5 +168,12 @@ class TimerViewModel extends ChangeNotifier {
       startCountDown(DateTime.now());
     }
     notifyListeners();
+  }
+
+  void _setTorchMode() async {
+    await methodChannel.invokeMethod<bool>(
+      "setTorchMode",
+      {"enabled": !_isFlashLightOn},
+    );
   }
 }
