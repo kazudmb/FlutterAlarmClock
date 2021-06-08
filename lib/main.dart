@@ -14,36 +14,27 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  // タイムゾーンの初期設定
   await _configureLocalTimeZone();
 
+  // notificationの初期設定
   var initializationSettingsAndroid =
       const AndroidInitializationSettings('doroid');
   var initializationSettingsIOS = IOSInitializationSettings(
       requestAlertPermission: true,
       requestBadgePermission: true,
-      requestSoundPermission: true,
+      requestSoundPermission: false,
       onDidReceiveLocalNotification:
           (int id, String? title, String? body, String? payload) async {});
   var initializationSettings = InitializationSettings(
       android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
   await flutterLocalNotificationsPlugin.initialize(initializationSettings,
-      onSelectNotification: (String? payload) async {
-    debugPrint('notification payload: ' + payload!);
-  });
+      onSelectNotification: _selectNotification);
 
   // AdMobの初期化処理
   MobileAds.instance.initialize();
 
   runApp(ProviderScope(child: MyApp()));
-}
-
-Future<void> _configureLocalTimeZone() async {
-  tz.initializeTimeZones();
-  // TODO(dmb): MethodChannelを使用して、端末のLocation情報を取得したい
-  // final String? timeZoneName =
-  //     await platform.invokeMethod<String>('getTimeZoneName');
-  var japan = getLocation('Asia/Tokyo');
-  setLocalLocation(japan);
 }
 
 class MyApp extends HookWidget {
@@ -64,5 +55,25 @@ class MyApp extends HookWidget {
         ],
       ),
     );
+  }
+}
+
+Future<void> _configureLocalTimeZone() async {
+  tz.initializeTimeZones();
+  // TODO(dmb): MethodChannelを使用して、端末のLocation情報を取得したい
+  // final String? timeZoneName =
+  //     await platform.invokeMethod<String>('getTimeZoneName');
+  var japan = getLocation('Asia/Tokyo');
+  setLocalLocation(japan);
+}
+
+Future<void> _selectNotification(String? payload) async {
+  if (payload != null) {
+    switch (payload) {
+      // TODO(dmb): アプリ起動時に、最初に開くタブ(画面)を判定すること
+      // TODO(dmb): LED消灯、バイブ停止もここで行う？？
+      case 'alarm':
+      case 'timer':
+    }
   }
 }

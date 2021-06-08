@@ -52,8 +52,8 @@ class AlarmViewModel extends ChangeNotifier {
   void scheduleAlarm(DateTime scheduledNotificationDateTime) async {
     await flutterLocalNotificationsPlugin.zonedSchedule(
         Constant.notificationAlarmId,
-        'scheduled title',
-        'scheduled body',
+        null,
+        'Alarm',
         tz.TZDateTime(
           tz.local,
           scheduledNotificationDateTime.year,
@@ -81,6 +81,7 @@ class AlarmViewModel extends ChangeNotifier {
           ),
         ),
         androidAllowWhileIdle: true,
+        payload: 'alarm',
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime);
   }

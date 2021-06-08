@@ -67,8 +67,8 @@ class TimerViewModel extends ChangeNotifier {
   void scheduleTimer(DateTime scheduledNotificationDateTime) async {
     await flutterLocalNotificationsPlugin.zonedSchedule(
         Constant.notificationTimerId,
-        'scheduled title',
-        'scheduled body',
+        null,
+        'Timer',
         tz.TZDateTime(
           tz.local,
           scheduledNotificationDateTime.year,
@@ -97,6 +97,7 @@ class TimerViewModel extends ChangeNotifier {
           ),
         ),
         androidAllowWhileIdle: true,
+        payload: 'timer',
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime);
   }
@@ -143,7 +144,7 @@ class TimerViewModel extends ChangeNotifier {
         countDownDateTime.minute == 0 &&
         countDownDateTime.second == 0 &&
         countDownDateTime.millisecond == 0) {
-      _setTorchMode();
+      // _setTorchMode();
       timer.cancel();
       deleteTimer();
       fetchTimer();
