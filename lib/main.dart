@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:light_alarm/util/method_channel_util.dart';
 import 'package:light_alarm/view/molecules/admob.dart';
 import 'package:light_alarm/view/pages/timer_page.dart';
 import 'package:timezone/data/latest.dart' as tz;
@@ -17,12 +18,14 @@ void main() async {
   // タイムゾーンの初期設定
   await _configureLocalTimeZone();
 
+  // TODO(dmb): 初期化処理はinit()を作成して切り出したい
+  // TODO(dmb): 参考URL https://www.freecodecamp.org/news/local-notifications-in-flutter/
   // notificationの初期設定
   var initializationSettingsAndroid =
       const AndroidInitializationSettings('doroid');
   var initializationSettingsIOS = IOSInitializationSettings(
-      requestAlertPermission: true,
-      requestBadgePermission: true,
+      requestAlertPermission: false,
+      requestBadgePermission: false,
       requestSoundPermission: false,
       onDidReceiveLocalNotification:
           (int id, String? title, String? body, String? payload) async {});
@@ -74,6 +77,8 @@ Future<void> _selectNotification(String? payload) async {
       // TODO(dmb): LED消灯、バイブ停止もここで行う？？
       case 'alarm':
       case 'timer':
+        // TODO(dmb): LED消灯の動作確認を実施すること
+        MethodChannelUtil().setTorchMode(false);
     }
   }
 }

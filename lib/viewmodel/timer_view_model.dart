@@ -144,7 +144,7 @@ class TimerViewModel extends ChangeNotifier {
         countDownDateTime.minute == 0 &&
         countDownDateTime.second == 0 &&
         countDownDateTime.millisecond == 0) {
-      // _setTorchMode();
+      // MethodChannelUtil().setTorchMode(_isFlashLightOn);
       timer.cancel();
       deleteTimer();
       fetchTimer();
@@ -169,12 +169,5 @@ class TimerViewModel extends ChangeNotifier {
       startCountDown(DateTime.now());
     }
     notifyListeners();
-  }
-
-  void _setTorchMode() async {
-    await methodChannel.invokeMethod<bool>(
-      "setTorchMode",
-      {"enabled": !_isFlashLightOn},
-    );
   }
 }
